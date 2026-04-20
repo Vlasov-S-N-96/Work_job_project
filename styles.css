@@ -110,7 +110,7 @@ p {
 /* ===== ПОДВАЛ (FOOTER) ===== */
 .footer {
     background: #107980;
-    margin-top: 10px 0 20px 0;
+    margin-top: 20px;
     padding: 5px 15px 25px 45px;
     border-radius: 0 0 24px 24px;
     text-align: left;
@@ -148,12 +148,11 @@ p {
 }
 
 .social__icon svg {
-    width: 20px;
-    height: 20px;
-    border-radius: 100%;
-    background: #0b5c95;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;      /* квадратные с закруглением */
+    background: rgba(255, 255, 255, 0.15);  /* полупрозрачный белый */
     padding: 8px;
-    box-sizing: content-box;
 }
 
 .social__icon:hover svg {
