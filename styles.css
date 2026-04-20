@@ -1,0 +1,123 @@
+/* body_style */
+.body_style {
+    background: #f0f2f5;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    padding: 40px 20px;
+    margin: 0;
+}
+
+.conteiner-size{
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* ===== ВЕРХНЯЯ КАРТОЧКА (фото + имя + заголовок) ===== */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: white;
+    padding: 25px 40px;
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    gap: 60px;
+}
+
+/* Левый блок: фото + имя (имя под фото) */
+.photo-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Фото */
+.avatar {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Имя под фото */
+.name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1e4663;
+}
+
+/* Правый блок: заголовок */
+.title-block {
+    flex-shrink: 0;
+}
+
+.title-block h1 {
+    font-size: 36px;
+    color: #16d6ad;
+    margin: 0;
+    font-weight: 600;
+    border-left: 4px solid #16d6ad;
+    padding-left: 20px;
+}
+
+/* Черта */
+.divider {
+    max-width: 1180px;
+    margin: 0 auto;
+    height: 6px;
+    background: linear-gradient(#1f6392, #16d6ad);
+}
+
+/* Нижний контент */
+.content_section {
+    background: white;
+    border-radius: 0 0 24px 24px;
+    padding: 15px 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.subheadings_info {
+    font-weight: bold;
+    font-size: 22px;
+    margin-top: 25px;
+    color: #1e4663;
+}
+
+.subheadings_info:first-of-type {
+    margin-top: 0;
+}
+
+.ul_jackdaw {
+    list-style-type: disc;
+    margin-left: 0px;
+}
+
+.text_link a, a {
+    text-decoration: none;
+    color: #1f6392;
+}
+
+.text_link a:hover, a:hover {
+    color: #16d6ad;
+}
+
+p {
+    margin: 12px 0;
+    line-height: 1.5;
+}
+
+/* Адаптация */
+@media (max-width: 750px) {
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .title-block h1 {
+        border-left: none;
+        border-top: 3px solid #16d6ad;
+        padding-top: 15px;
+    }
+    .content_section {
+        padding: 25px 20px;
+    }
+}
