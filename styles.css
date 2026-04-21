@@ -1,4 +1,3 @@
-/* body_style */
 .body_style {
     background: #f0f2f5;
     font-family: 'Segoe UI', 'Arial', sans-serif;
@@ -6,12 +5,11 @@
     margin: 0;
 }
 
-.conteiner-size{
+.conteiner-size {
     max-width: 1100px;
     margin: 0 auto;
 }
 
-/* ===== ВЕРХНЯЯ КАРТОЧКА (фото + имя + заголовок) ===== */
 .header-container {
     display: flex;
     align-items: center;
@@ -23,7 +21,6 @@
     gap: 60px;
 }
 
-/* Левый блок: фото + имя (имя под фото) */
 .photo-block {
     display: flex;
     flex-direction: column;
@@ -31,7 +28,6 @@
     gap: 12px;
 }
 
-/* Фото */
 .avatar {
     width: 100px;
     height: 100px;
@@ -39,14 +35,12 @@
     border-radius: 50%;
 }
 
-/* Имя под фото */
 .name {
     font-size: 20px;
     font-weight: bold;
     color: #1e4663;
 }
 
-/* Правый блок: заголовок */
 .title-block {
     flex-shrink: 0;
 }
@@ -60,7 +54,6 @@
     padding-left: 20px;
 }
 
-/* Черта */
 .divider {
     max-width: 1180px;
     margin: 0 auto;
@@ -68,7 +61,6 @@
     background: linear-gradient(#1f6392, #16d6ad);
 }
 
-/* Нижний контент */
 .content_section {
     background: white;
     border-radius: 0;
@@ -107,11 +99,9 @@ p {
     line-height: 1.5;
 }
 
-/* ===== ПОДВАЛ (FOOTER) ===== */
 .footer {
     background: #107980;
-    margin-top: 20px;
-    padding: 5px 15px 25px 45px;
+    padding: 5px 45px 25px 45px;
     border-radius: 0 0 24px 24px;
     text-align: left;
 }
@@ -124,7 +114,7 @@ p {
 .footer-title {
     color: white;
     font-size: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-weight: 600;
     font-family: 'Segoe UI', 'Roboto', sans-serif;
 }
@@ -138,25 +128,53 @@ p {
     gap: 10px;
 }
 
-.social__icon {
-    display: inline-block;
-    transition: transform 0.3s ease;
-}
-
-.social__icon:hover {
-    transform: translateY(-5px);
-}
-
+/* Общие стили для всех иконок */
 .social__icon svg {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;      /* квадратные с закруглением */
-    background: rgba(255, 255, 255, 0.15);  /* полупрозрачный белый */
-    padding: 8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;  /* Белый фон/ободок */
+    padding: 4px;
 }
 
-.social__icon:hover svg {
-    background: rgb(5, 59, 107);
+/* Telegram - синий внутри */
+.social__icon.telegram svg path,
+.social__icon.telegram svg circle,
+.social__icon.telegram svg rect,
+.social__icon.telegram svg polygon {
+    fill: #09a0ab;  /* Синий цвет Telegram */
+}
+
+/* Почта (конверт) - синий внутри, белый фон */
+.social__icon.email svg circle {
+    fill: white;  /* Фон круга - белый (перекрываем красный) */
+}
+
+.social__icon.email svg rect {
+    fill: #0088cc;  /* Конверт - синий */
+}
+
+.social__icon.email svg path,
+.social__icon.email svg line {
+    stroke: #0088cc;  /* Линии конверта - синие */
+}
+
+/* При наведении на Telegram */
+.social__icon.telegram:hover svg path,
+.social__icon.telegram:hover svg circle,
+.social__icon.telegram:hover svg rect,
+.social__icon.telegram:hover svg polygon {
+    fill: #006699;  /* Более тёмный синий при наведении */
+}
+
+/* При наведении на Почту */
+.social__icon.email:hover svg rect {
+    fill: #006699;  /* Конверт темнеет */
+}
+
+.social__icon.email:hover svg path,
+.social__icon.email:hover svg line {
+    stroke: #006699;  /* Линии темнеют */
 }
 
 .footer-copyright {
