@@ -23,121 +23,132 @@
         <!-- НИЖНЯЯ ЧЕРТА -->
         <div class="divider"></div>
 
+        <nav class="nav-buttons">
+            <a href="#section1" class="nav-btn">📌 1. Типы и методы</a>
+            <a href="#section2" class="nav-btn">📋 2. Анализ требований</a>
+            <a href="#section3" class="nav-btn">⚖️ 3. Эквивалентное разбиение</a>
+            <a href="#section4" class="nav-btn">🔍 4. Фильтрация</a>
+            <a href="#section5" class="nav-btn">💳 5. Оплата</a>
+            <a href="#section6" class="nav-btn">✅ 6. Чек-лист</a>
+            <a href="#section7" class="nav-btn">🧪 7. Тест-кейсы</a>
+            <a href="#section8" class="nav-btn">🐛 8. Поиск багов</a>
+        </nav>
+
         <!-- ОСНОВНОЙ КОНТЕНТ -->
-        <div class="content_section">
-            <ol>
-                <!-- 1. Типы, методы и уровни -->
-                <li>
-                    <div class="subheadings_info">Типы, методы и уровни</div>
-                    <p>На основании описания приложения необходимо предположить:</p>
-                    <ul class="ul_jackdaw">
-                        <li>Какие методы тестирования будут использованы для данного приложения?</li>
-                        <li>Какие функциональные и нефункциональные типы тестирования могут быть использованы для данного приложения?</li>
-                        <li>На каких уровнях может проводиться тестирование данного приложения?</li>
-                    </ul>
-                    <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1bUkOQuHlxxTDv7ZIlbm_shnMmI3a-tGKETuIihLOKME/edit?gid=0#gid=0" target="_blank">📌 Пример решения</a></p>
-                </li>
+         <!-- ОСНОВНОЙ КОНТЕНТ (ОБЁРНУТ В main, li ЗАМЕНЕНЫ НА section) -->
+        <main class="content_section">
+            <!-- 1. Типы, методы и уровни -->
+            <section id="section1">
+                <h2 class="subheadings_info">1. Типы, методы и уровни</h2>
+                <p>На основании описания приложения необходимо предположить:</p>
+                <ul class="ul_jackdaw">
+                    <li>Какие методы тестирования будут использованы для данного приложения?</li>
+                    <li>Какие функциональные и нефункциональные типы тестирования могут быть использованы для данного приложения?</li>
+                    <li>На каких уровнях может проводиться тестирование данного приложения?</li>
+                </ul>
+                <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1bUkOQuHlxxTDv7ZIlbm_shnMmI3a-tGKETuIihLOKME/edit?gid=0#gid=0" target="_blank">📌 Пример решения</a></p>
+            </section>
 
-                <!-- 2. Анализ требований и макета -->
-                <li>
-                    <div class="subheadings_info">Анализ требований и макета</div>
-                    <p>Необходимо провести анализ требований модуля "Регистрация и Авторизация" для приложения "Интернет-магазин". Для этого у вас есть готовые пользовательские истории и мокап приложения в <a href="https://www.figma.com/design/2T99Jt5OHPqkhe4yyoe2IC/demoshopping.ru?node-id=0-1&p=f" target="_blank">Figma</a>.</p>
-                    <p>Список историй:</p>
-                    <ul class="ul_jackdaw">
-                        <li><a href="https://rusau.kaiten.ru/p/d/731b641b-545d-4311-a691-c397a21eb1bd" target="_blank">ID1 Регистрация пользователя / User Registration</a></li>
-                        <li><a href="https://rusau.kaiten.ru/p/d/1c04eafd-86f6-4a21-85cd-1fbf8d3be706" target="_blank">ID2 Вход в систему / User Login</a></li>
-                        <li><a href="https://rusau.kaiten.ru/p/d/1f464f17-8de7-4f54-992c-11e9fa5fd646" target="_blank">ID3 Выход из системы / User Logout</a></li>
-                        <li><a href="https://rusau.kaiten.ru/p/d/d440e1db-3645-48f3-8510-686704dcf09c" target="_blank">ID4 Проверка авторизации перед доступом к функциональности / Authorization Check before Accessing Functionality</a></li>
-                    </ul>
-                    <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1VevSJB-PkAZYKlzrPrzCT3R2dL9jv7oHGKQj4bzrSno/edit?usp=drive_web&ouid=102189835010254179875" target="_blank">📌 Пример решения</a></p>
-                </li>
+            <!-- 2. Анализ требований и макета -->
+            <section id="section2">
+                <h2 class="subheadings_info">2. Анализ требований и макета</h2>
+                <p>Необходимо провести анализ требований модуля "Регистрация и Авторизация" для приложения "Интернет-магазин". Для этого у вас есть готовые пользовательские истории и мокап приложения в <a href="https://www.figma.com/design/2T99Jt5OHPqkhe4yyoe2IC/demoshopping.ru?node-id=0-1&p=f" target="_blank">Figma</a>.</p>
+                <p>Список историй:</p>
+                <ul class="ul_jackdaw">
+                    <li><a href="https://rusau.kaiten.ru/p/d/731b641b-545d-4311-a691-c397a21eb1bd" target="_blank">ID1 Регистрация пользователя / User Registration</a></li>
+                    <li><a href="https://rusau.kaiten.ru/p/d/1c04eafd-86f6-4a21-85cd-1fbf8d3be706" target="_blank">ID2 Вход в систему / User Login</a></li>
+                    <li><a href="https://rusau.kaiten.ru/p/d/1f464f17-8de7-4f54-992c-11e9fa5fd646" target="_blank">ID3 Выход из системы / User Logout</a></li>
+                    <li><a href="https://rusau.kaiten.ru/p/d/d440e1db-3645-48f3-8510-686704dcf09c" target="_blank">ID4 Проверка авторизации перед доступом к функциональности / Authorization Check before Accessing Functionality</a></li>
+                </ul>
+                <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1VevSJB-PkAZYKlzrPrzCT3R2dL9jv7oHGKQj4bzrSno/edit?usp=drive_web&ouid=102189835010254179875" target="_blank">📌 Пример решения</a></p>
+            </section>
 
-                <!-- 3. Эквивалентное разбиение -->
-                <li>
-                    <div class="subheadings_info">Эквивалентное разбиение и анализ граничных значений</div>
-                    <p class="text_link"><a href="https://rusau.kaiten.ru/p/d/731b641b-545d-4311-a691-c397a21eb1bd" target="_blank">Требование</a> с валидациями для полей "Логин" и "Пароль" на странице регистрации. Оба поля принимают не просто буквы, а латиницу.</p>
-                    <ul class="ul_jackdaw">  
-                        <li>Необходимо заполнить таблицу тестовыми данными для проверки полей "Логин" и "Пароль" с учетом создания классов эквивалентности и граничных значений.</li>
-                    </ul>
-                    <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1Gv9aTr1BxdzXgcnLd-U9PMyYJYdZb1w_PZxS7_c92Kk/edit?usp=drive_web&ouid=102189835010254179875" target="_blank">📌 Пример решения</a></p>
-                </li>
+            <!-- 3. Эквивалентное разбиение -->
+            <section id="section3">
+                <h2 class="subheadings_info">3. Эквивалентное разбиение и анализ граничных значений</h2>
+                <p><a href="https://rusau.kaiten.ru/p/d/731b641b-545d-4311-a691-c397a21eb1bd" target="_blank">Требование</a> с валидациями для полей "Логин" и "Пароль" на странице регистрации. Оба поля принимают не просто буквы, а латиницу.</p>
+                <ul class="ul_jackdaw">  
+                    <li>Необходимо заполнить таблицу тестовыми данными для проверки полей "Логин" и "Пароль" с учетом создания классов эквивалентности и граничных значений.</li>
+                </ul>
+                <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1Gv9aTr1BxdzXgcnLd-U9PMyYJYdZb1w_PZxS7_c92Kk/edit?usp=drive_web&ouid=102189835010254179875" target="_blank">📌 Пример решения</a></p>
+            </section>
 
-                <!-- 4. Тестовые данные для фильтрации и сортировки -->
-                <li>
-                    <div class="subheadings_info">Тестовые данные для фильтрации и сортировки</div>
-                    <p>Требования к фильтрации и сортировке:</p>
-                    <ul class="ul_jackdaw">
-                        <li>Создать таблицу с исходными данными для попарного тестирования, включающую параметры и значения.</li>
-                        <li>Сгенерировать тестовые данные для тестирования на основе алгоритма Pairwise.</li>
-                        <li>Создать таблицу с двумя вкладками: исходные данные и тестируемые значения после применения алгоритма</li>
-                    </ul>
-                    <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1SnSToZLC-UF6XqXtcdZH5fWawahECPrROehS-deCQgU/edit?gid=0#gid=0" target="_blank">📌 Пример решения</a></p>
-                </li>
+            <!-- 4. Тестовые данные для фильтрации и сортировки -->
+            <section id="section4">
+                <h2 class="subheadings_info">4. Тестовые данные для фильтрации и сортировки</h2>
+                <p>Требования к фильтрации и сортировке:</p>
+                <ul class="ul_jackdaw">
+                    <li>Создать таблицу с исходными данными для попарного тестирования, включающую параметры и значения.</li>
+                    <li>Сгенерировать тестовые данные для тестирования на основе алгоритма Pairwise.</li>
+                    <li>Создать таблицу с двумя вкладками: исходные данные и тестируемые значения после применения алгоритма</li>
+                </ul>
+                <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1SnSToZLC-UF6XqXtcdZH5fWawahECPrROehS-deCQgU/edit?gid=0#gid=0" target="_blank">📌 Пример решения</a></p>
+            </section>
 
-                <!-- 5. Тестовые данные для оплаты -->
-                <li>
-                    <div class="subheadings_info">Тестовые данные для оплаты</div>
-                    <p class="p_text">Необходимо применить технику тест-дизайна "Таблица принятия решений". В нашем приложении есть модуль, включающий оплату через Paypal.</p>
-                    <p class="p_text">У аккаунта Paypal есть три статуса: valid, invalid и blocked, а также такая характеристика, как доступный баланс, который может быть нулевым и положительным (= достаточным для оплаты).</p>
-                    <p class="p_text">В случае, если статус карты valid, а баланс на аккаунте достаточный для покупки, пользователь может совершить покупку. Во всех остальных случаях транзакция будет отклонена.</p>
-                    <ul class="ul_jackdaw">
-                        <li>Создать таблицу, которая будет учитывать эти условия и выводить действие, согласно им.</li>
-                    </ul>
-                    <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1SnSToZLC-UF6XqXtcdZH5fWawahECPrROehS-deCQgU/edit?gid=1292314697#gid=1292314697" target="_blank">📌 Пример решения</a></p>
-                </li>
+            <!-- 5. Тестовые данные для оплаты -->
+            <section id="section5">
+                <h2 class="subheadings_info">5. Тестовые данные для оплаты</h2>
+                <p>Необходимо применить технику тест-дизайна "Таблица принятия решений". В нашем приложении есть модуль, включающий оплату через Paypal.</p>
+                <p>У аккаунта Paypal есть три статуса: valid, invalid и blocked, а также такая характеристика, как доступный баланс, который может быть нулевым и положительным (= достаточным для оплаты).</p>
+                <p>В случае, если статус карты valid, а баланс на аккаунте достаточный для покупки, пользователь может совершить покупку. Во всех остальных случаях транзакция будет отклонена.</p>
+                <ul class="ul_jackdaw">
+                    <li>Создать таблицу, которая будет учитывать эти условия и выводить действие, согласно им.</li>
+                </ul>
+                <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1SnSToZLC-UF6XqXtcdZH5fWawahECPrROehS-deCQgU/edit?gid=1292314697#gid=1292314697" target="_blank">📌 Пример решения</a></p>
+            </section>
 
-                <!-- 6. Создание чек-листа -->
-                <li>
-                    <div class="subheadings_info">Создание чек-листа</div>
-                    <p class="text_link">Ссылка на само приложение <a href="https://intern.demoshopping.ru/" target="_blank">https://intern.demoshopping.ru/</a></p>
-                    <ul class="ul_jackdaw">
-                        <li>Написать чек-лист, который будет включать тестирование по всем историям.</li>
-                    </ul>
-                    <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1DzJWDYINvQ6zEzzYD-rrGuDeMP6S5_qLP3PYs7r37dg/edit?gid=0#gid=0" target="_blank">📌 Пример решения</a></p>
-                </li>
+            <!-- 6. Создание чек-листа -->
+            <section id="section6">
+                <h2 class="subheadings_info">6. Создание чек-листа</h2>
+                <p>Ссылка на само приложение <a href="https://intern.demoshopping.ru/" target="_blank">https://intern.demoshopping.ru/</a></p>
+                <ul class="ul_jackdaw">
+                    <li>Написать чек-лист, который будет включать тестирование по всем историям.</li>
+                </ul>
+                <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1DzJWDYINvQ6zEzzYD-rrGuDeMP6S5_qLP3PYs7r37dg/edit?gid=0#gid=0" target="_blank">📌 Пример решения</a></p>
+            </section>
 
-                <!-- 7. Создание тест-кейсов -->
-                <li>
-                    <div class="subheadings_info">Создание тест-кейсов</div>
-                    <ul class="ul_jackdaw">
-                        <li>Создать не менее 10 тест-кейсов для всех историй.</li>
-                        <li>Заголовок тест-кейса должен быть понятным.</li>
-                        <li>У каждого шага должен быть ожидаемый результат.</li>
-                    </ul>
-                    <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/18vNGB9SCX3O_g759Qn72StFXo81sTul3EYCo1Qnzfx8/edit?gid=3946733#gid=3946733" target="_blank">📌 Пример решения</a></p>
-                </li>
+            <!-- 7. Создание тест-кейсов -->
+            <section id="section7">
+                <h2 class="subheadings_info">7. Создание тест-кейсов</h2>
+                <ul class="ul_jackdaw">
+                    <li>Создать не менее 10 тест-кейсов для всех историй.</li>
+                    <li>Заголовок тест-кейса должен быть понятным.</li>
+                    <li>У каждого шага должен быть ожидаемый результат.</li>
+                </ul>
+                <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/18vNGB9SCX3O_g759Qn72StFXo81sTul3EYCo1Qnzfx8/edit?gid=3946733#gid=3946733" target="_blank">📌 Пример решения</a></p>
+            </section>
 
-                <!-- 8. Поиск багов -->
-                <li>
-                    <div class="subheadings_info">Поиск багов</div>
-                    <ul class="ul_jackdaw">
-                        <li>Если вы нашли дефекты в ходе прохождения проверок из чек-листа, то создайте дефект и добавьте его ID в атрибут "BUG ID" из чек-листа.</li>
-                        <li>Добавить не менее 5 отчетов.</li>
-                        <li>Заголовок тест-кейса должен быть понятным.</li>
-                        <li>По ходу выполнения тест-кейса необходимо создать дефект, если он есть. Выполнять дефекты через тестовые прогоны (Test Runs) в системах по управлению тест-кейсами.</li>
-                    </ul>
-                    
-                    <p class="text_link">Список историй:</p>
-                    <ul class="ul_jackdaw">
-                        <li><a href="https://rusau.kaiten.ru/p/d/731b641b-545d-4311-a691-c397a21eb1bd" target="_blank">ID1 Регистрация пользователя / User Registration</a></li>
-                        <li><a href="https://rusau.kaiten.ru/p/d/1c04eafd-86f6-4a21-85cd-1fbf8d3be706" target="_blank">ID2 Вход в систему / User Login</a></li>
-                        <li><a href="https://rusau.kaiten.ru/p/d/1f464f17-8de7-4f54-992c-11e9fa5fd646" target="_blank">ID3 Выход из системы / User Logout</a></li>
-                        <li><a href="https://rusau.kaiten.ru/p/d/d440e1db-3645-48f3-8510-686704dcf09c" target="_blank">ID4 Проверка авторизации перед доступом к функциональности / Authorization Check before Accessing Functionality</a></li>
-                        <li><a href="https://rusau.kaiten.ru/p/d/d49f0805-50b2-4b3e-b41c-524c0630b709" target="_blank">ID5 Просмотр списка товаров и деталей продукта / Viewing the product list and product details</a></li>
-                        <li><a href="https://rusau.kaiten.ru/p/d/11290aff-1218-44c5-a195-f724931d6615" target="_blank">ID6 Добавление товара в корзину / Adding a product to the cart</a></li>
-                        <li><a href="https://rusau.kaiten.ru/p/d/5b275ec1-e6df-47a4-9648-d422f4a387f3" target="_blank">ID7 Фильтрация списка товаров / Filtering the product list</a></li>
-                        <li><a href="https://rusau.kaiten.ru/p/d/705e06d8-971f-4e0a-b8de-7e13befcc7a3" target="_blank">ID8 Сортировка списка товаров / Sorting the product list</a></li>
-                    </ul>
-                    <p class="text_link">Ссылка на само приложение <a href="https://intern.demoshopping.ru/" target="_blank">https://intern.demoshopping.ru/</a></p>
-                    <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1XjI1CYNhTq_a9quSeuw4eauC-P3KeUJ2mt0l9FOxoQo/edit?gid=0#gid=0" target="_blank">✅ Пример решения</a></p>
-                </li>
-            </ol>
-        </div>
-        
+            <!-- 8. Поиск багов -->
+            <section id="section8">
+                <h2 class="subheadings_info">8. Поиск багов</h2>
+                <ul class="ul_jackdaw">
+                    <li>Если вы нашли дефекты в ходе прохождения проверок из чек-листа, то создайте дефект и добавьте его ID в атрибут "BUG ID" из чек-листа.</li>
+                    <li>Добавить не менее 5 отчетов.</li>
+                    <li>Заголовок тест-кейса должен быть понятным.</li>
+                    <li>По ходу выполнения тест-кейса необходимо создать дефект, если он есть. Выполнять дефекты через тестовые прогоны (Test Runs) в системах по управлению тест-кейсами.</li>
+                </ul>
+                
+                <p>Список историй:</p>
+                <ul class="ul_jackdaw">
+                    <li><a href="https://rusau.kaiten.ru/p/d/731b641b-545d-4311-a691-c397a21eb1bd" target="_blank">ID1 Регистрация пользователя / User Registration</a></li>
+                    <li><a href="https://rusau.kaiten.ru/p/d/1c04eafd-86f6-4a21-85cd-1fbf8d3be706" target="_blank">ID2 Вход в систему / User Login</a></li>
+                    <li><a href="https://rusau.kaiten.ru/p/d/1f464f17-8de7-4f54-992c-11e9fa5fd646" target="_blank">ID3 Выход из системы / User Logout</a></li>
+                    <li><a href="https://rusau.kaiten.ru/p/d/d440e1db-3645-48f3-8510-686704dcf09c" target="_blank">ID4 Проверка авторизации перед доступом к функциональности / Authorization Check before Accessing Functionality</a></li>
+                    <li><a href="https://rusau.kaiten.ru/p/d/d49f0805-50b2-4b3e-b41c-524c0630b709" target="_blank">ID5 Просмотр списка товаров и деталей продукта / Viewing the product list and product details</a></li>
+                    <li><a href="https://rusau.kaiten.ru/p/d/11290aff-1218-44c5-a195-f724931d6615" target="_blank">ID6 Добавление товара в корзину / Adding a product to the cart</a></li>
+                    <li><a href="https://rusau.kaiten.ru/p/d/5b275ec1-e6df-47a4-9648-d422f4a387f3" target="_blank">ID7 Фильтрация списка товаров / Filtering the product list</a></li>
+                    <li><a href="https://rusau.kaiten.ru/p/d/705e06d8-971f-4e0a-b8de-7e13befcc7a3" target="_blank">ID8 Сортировка списка товаров / Sorting the product list</a></li>
+                </ul>
+                <p>Ссылка на само приложение <a href="https://intern.demoshopping.ru/" target="_blank">https://intern.demoshopping.ru/</a></p>
+                <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1XjI1CYNhTq_a9quSeuw4eauC-P3KeUJ2mt0l9FOxoQo/edit?gid=0#gid=0" target="_blank">📌 Пример решения</a></p>
+            </section>
+
+        </main>
+
         <!-- ПОДВАЛ -->
         <footer class="footer">
             <div class="footer-container">
-                <h3 class="footer-title">Контакты</h3>
+                <h2 class="footer-title">Контакты</h2>
                 <ul class="footer-social">
                     <li>
                         <a class="social__icon telegram" href="https://t.me/Vlasov_S_Nid96271" target="_blank" aria-label="Перейти в Telegram">
@@ -149,7 +160,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="social__icon" href="https://mail.yandex.ru/" target="_blank" aria-label="Написать на Яндекс Почту">
+                        <a class="social__icon email" href="mailto:nikolaevch96@yandex.ru" target="_blank" aria-label="Написать на Яндекс Почту">
                             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <!-- Красный круг-подложка -->
                                 <circle cx="20" cy="20" r="20" fill="#09a0ab"/>
