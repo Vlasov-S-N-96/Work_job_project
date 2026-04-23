@@ -7,9 +7,8 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="body_style">
-    <!-- Родительский контейнер отвечает за ширину и центрирование -->
     <div class="conteiner-size">
-        <!-- ВЕРХНИЙ БЛОК: фото + имя (слева) и заголовок (справа) -->
+        <!-- ВЕРХНИЙ БЛОК -->
         <div class="header-container">
             <div class="photo-block">
                 <img src="my_foto/foto.jpg" alt="Моя фотография" class="avatar">
@@ -18,26 +17,43 @@
             <div class="title-block">
                 <h1>Тестовые артефакты</h1>
             </div>
+            <!-- БУРГЕР-МЕНЮ -->
+            <div class="burger-menu">
+                <button class="burger-btn" id="burgerBtn" aria-label="Меню">
+                    ☰ Меню
+                </button>
+            </div>
         </div>
 
-        <!-- НИЖНЯЯ ЧЕРТА -->
         <div class="divider"></div>
 
+        <!-- ДЕСКТОПНЫЕ КНОПКИ -->
         <nav class="nav-buttons">
-            <a href="#section1" class="nav-btn">📌 1. Типы и методы</a>
-            <a href="#section2" class="nav-btn">📋 2. Анализ требований</a>
-            <a href="#section3" class="nav-btn">⚖️ 3. Эквивалентное разбиение</a>
-            <a href="#section4" class="nav-btn">🔍 4. Фильтрация</a>
-            <a href="#section5" class="nav-btn">💳 5. Оплата</a>
-            <a href="#section6" class="nav-btn">✅ 6. Чек-лист</a>
-            <a href="#section7" class="nav-btn">🧪 7. Тест-кейсы</a>
-            <a href="#section8" class="nav-btn">🐛 8. Поиск багов</a>
+            <a href="#section1" class="nav-btn">Типы и методы</a>
+            <a href="#section2" class="nav-btn">Анализ требований</a>
+            <a href="#section3" class="nav-btn">Эквивалентное разбиение</a>
+            <a href="#section4" class="nav-btn">Фильтрация</a>
+            <a href="#section5" class="nav-btn">Оплата</a>
+            <a href="#section6" class="nav-btn">Чек-лист</a>
+            <a href="#section7" class="nav-btn">Тест-кейсы</a>
+            <a href="#section8" class="nav-btn">Поиск багов</a>
         </nav>
 
+        <!-- МОБИЛЬНОЕ МЕНЮ -->
+        <div class="menu-overlay" id="menuOverlay"></div>
+        <nav class="mobile-nav" id="mobileNav">
+            <a href="#section1" class="nav-btn">Типы и методы</a>
+            <a href="#section2" class="nav-btn">Анализ требований</a>
+            <a href="#section3" class="nav-btn">Эквивалентное разбиение</a>
+            <a href="#section4" class="nav-btn">Фильтрация</a>
+            <a href="#section5" class="nav-btn">Оплата</a>
+            <a href="#section6" class="nav-btn">Чек-лист</a>
+            <a href="#section7" class="nav-btn">Тест-кейсы</a>
+            <a href="#section8" class="nav-btn">Поиск багов</a>
+        </nav>
+        
         <!-- ОСНОВНОЙ КОНТЕНТ -->
-         <!-- ОСНОВНОЙ КОНТЕНТ (ОБЁРНУТ В main, li ЗАМЕНЕНЫ НА section) -->
         <main class="content_section">
-            <!-- 1. Типы, методы и уровни -->
             <section id="section1">
                 <h2 class="subheadings_info">1. Типы, методы и уровни</h2>
                 <p>На основании описания приложения необходимо предположить:</p>
@@ -49,7 +65,6 @@
                 <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1bUkOQuHlxxTDv7ZIlbm_shnMmI3a-tGKETuIihLOKME/edit?gid=0#gid=0" target="_blank">📌 Пример решения</a></p>
             </section>
 
-            <!-- 2. Анализ требований и макета -->
             <section id="section2">
                 <h2 class="subheadings_info">2. Анализ требований и макета</h2>
                 <p>Необходимо провести анализ требований модуля "Регистрация и Авторизация" для приложения "Интернет-магазин". Для этого у вас есть готовые пользовательские истории и мокап приложения в <a href="https://www.figma.com/design/2T99Jt5OHPqkhe4yyoe2IC/demoshopping.ru?node-id=0-1&p=f" target="_blank">Figma</a>.</p>
@@ -63,7 +78,6 @@
                 <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1VevSJB-PkAZYKlzrPrzCT3R2dL9jv7oHGKQj4bzrSno/edit?usp=drive_web&ouid=102189835010254179875" target="_blank">📌 Пример решения</a></p>
             </section>
 
-            <!-- 3. Эквивалентное разбиение -->
             <section id="section3">
                 <h2 class="subheadings_info">3. Эквивалентное разбиение и анализ граничных значений</h2>
                 <p><a href="https://rusau.kaiten.ru/p/d/731b641b-545d-4311-a691-c397a21eb1bd" target="_blank">Требование</a> с валидациями для полей "Логин" и "Пароль" на странице регистрации. Оба поля принимают не просто буквы, а латиницу.</p>
@@ -73,7 +87,6 @@
                 <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1Gv9aTr1BxdzXgcnLd-U9PMyYJYdZb1w_PZxS7_c92Kk/edit?usp=drive_web&ouid=102189835010254179875" target="_blank">📌 Пример решения</a></p>
             </section>
 
-            <!-- 4. Тестовые данные для фильтрации и сортировки -->
             <section id="section4">
                 <h2 class="subheadings_info">4. Тестовые данные для фильтрации и сортировки</h2>
                 <p>Требования к фильтрации и сортировке:</p>
@@ -85,7 +98,6 @@
                 <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1SnSToZLC-UF6XqXtcdZH5fWawahECPrROehS-deCQgU/edit?gid=0#gid=0" target="_blank">📌 Пример решения</a></p>
             </section>
 
-            <!-- 5. Тестовые данные для оплаты -->
             <section id="section5">
                 <h2 class="subheadings_info">5. Тестовые данные для оплаты</h2>
                 <p>Необходимо применить технику тест-дизайна "Таблица принятия решений". В нашем приложении есть модуль, включающий оплату через Paypal.</p>
@@ -97,7 +109,6 @@
                 <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1SnSToZLC-UF6XqXtcdZH5fWawahECPrROehS-deCQgU/edit?gid=1292314697#gid=1292314697" target="_blank">📌 Пример решения</a></p>
             </section>
 
-            <!-- 6. Создание чек-листа -->
             <section id="section6">
                 <h2 class="subheadings_info">6. Создание чек-листа</h2>
                 <p>Ссылка на само приложение <a href="https://intern.demoshopping.ru/" target="_blank">https://intern.demoshopping.ru/</a></p>
@@ -107,7 +118,6 @@
                 <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1DzJWDYINvQ6zEzzYD-rrGuDeMP6S5_qLP3PYs7r37dg/edit?gid=0#gid=0" target="_blank">📌 Пример решения</a></p>
             </section>
 
-            <!-- 7. Создание тест-кейсов -->
             <section id="section7">
                 <h2 class="subheadings_info">7. Создание тест-кейсов</h2>
                 <ul class="ul_jackdaw">
@@ -118,7 +128,6 @@
                 <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/18vNGB9SCX3O_g759Qn72StFXo81sTul3EYCo1Qnzfx8/edit?gid=3946733#gid=3946733" target="_blank">📌 Пример решения</a></p>
             </section>
 
-            <!-- 8. Поиск багов -->
             <section id="section8">
                 <h2 class="subheadings_info">8. Поиск багов</h2>
                 <ul class="ul_jackdaw">
@@ -142,7 +151,6 @@
                 <p>Ссылка на само приложение <a href="https://intern.demoshopping.ru/" target="_blank">https://intern.demoshopping.ru/</a></p>
                 <p class="text_link"><a href="https://docs.google.com/spreadsheets/d/1XjI1CYNhTq_a9quSeuw4eauC-P3KeUJ2mt0l9FOxoQo/edit?gid=0#gid=0" target="_blank">📌 Пример решения</a></p>
             </section>
-
         </main>
 
         <!-- ПОДВАЛ -->
@@ -162,11 +170,8 @@
                     <li>
                         <a class="social__icon email" href="mailto:nikolaevch96@yandex.ru" target="_blank" aria-label="Написать на Яндекс Почту">
                             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Красный круг-подложка -->
                                 <circle cx="20" cy="20" r="20" fill="#09a0ab"/>
-                                <!-- Белый конверт -->
                                 <rect x="8" y="13" width="24" height="14" rx="1" fill="white"/>
-                                <!-- Линии конверта -->
                                 <path d="M8 14L20 22L32 14" stroke="#DD0000" stroke-width="1.5" fill="none"/>
                                 <line x1="12" y1="17" x2="20" y2="21" stroke="#DD0000" stroke-width="1.5"/>
                                 <line x1="28" y1="17" x2="20" y2="21" stroke="#DD0000" stroke-width="1.5"/>
@@ -178,5 +183,7 @@
             </div>
         </footer>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
