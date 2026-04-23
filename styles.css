@@ -85,7 +85,7 @@
     font-weight: 500;
     height: 48px;
     padding: 0 15px;
-    border-radius: 0px;
+    border-radius: 20px;
     transition: all 0.3s ease;
     border: 2px solid #1e4663;
     cursor: pointer;
@@ -93,7 +93,6 @@
     text-align: center;
 }
 
-/* ПРИ НАВЕДЕНИИ */
 .nav-btn:hover {
     background: #1e4663;
     color: white;
@@ -102,7 +101,6 @@
     border-color: #1e4663;
 }
 
-/* ПРИ НАЖАТИИ */
 .nav-btn:active {
     transform: translateY(0);
     background: #0f3348;
@@ -110,7 +108,6 @@
     border-color: #0f3348;
 }
 
-/* Активная кнопка */
 .nav-btn.active {
     background: #1e4663;
     color: white;
@@ -184,7 +181,6 @@ p {
     gap: 10px;
 }
 
-/* Общие стили для всех иконок */
 .social__icon svg {
     width: 24px;
     height: 24px;
@@ -193,7 +189,6 @@ p {
     padding: 4px;
 }
 
-/* Telegram */
 .social__icon.telegram svg path,
 .social__icon.telegram svg circle,
 .social__icon.telegram svg rect,
@@ -201,7 +196,6 @@ p {
     fill: #09a0ab;
 }
 
-/* Почта */
 .social__icon.email svg circle {
     fill: #09a0ab;
 }
@@ -215,7 +209,6 @@ p {
     stroke: red;
 }
 
-/* При наведении на Telegram */
 .social__icon.telegram:hover svg path,
 .social__icon.telegram:hover svg circle,
 .social__icon.telegram:hover svg rect,
@@ -223,7 +216,6 @@ p {
     fill: #006699;
 }
 
-/* При наведении на Почту */
 .social__icon.email:hover svg rect {
     fill: white;
 }
@@ -245,6 +237,81 @@ p {
     border-top: 2px solid #aaacad;
 }
 
+/* ===== БУРГЕР-МЕНЮ (стили для мобильных) ===== */
+.burger-menu {
+    display: none;
+    position: relative;
+}
+
+.burger-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #1e4663;
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    min-width: 100px;
+}
+
+.burger-btn:hover {
+    background: #0f3348;
+    transform: translateY(-2px);
+}
+
+.burger-btn:active {
+    transform: translateY(0);
+}
+
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    max-width: 320px;
+    height: 100vh;
+    background: white;
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: left 0.3s ease;
+    padding: 80px 20px 30px;
+    overflow-y: auto;
+}
+
+.mobile-nav.active {
+    left: 0;
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+.menu-overlay.active {
+    display: block;
+}
+
+.mobile-nav .nav-btn {
+    display: flex;
+    margin-bottom: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
 /* ===== АДАПТАЦИЯ ДЛЯ 768px ===== */
 @media screen and (max-width: 768px) {
     
@@ -252,197 +319,132 @@ p {
         padding: 20px 12px;
     }
 
-    /* Кнопки - 4 в ряд, но меньшего размера */
     .nav-buttons {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
-        padding: 15px;
+        display: none;
     }
     
-    .nav-btn {
-        height: 40px;
-        font-size: 11px;
-        padding: 0 5px;
-        white-space: normal;
-        word-break: break-word;
-        gap: 4px;
+    .burger-menu {
+        display: block;
     }
-
+    
+    .burger-btn {
+        display: flex;
+    }
+    
     .header-container {
-        flex-direction: column;
+        position: relative;
+        flex-wrap: wrap;
+        justify-content: space-between;
         align-items: center;
-        background: white;
-        padding: 25px 20px;
-        gap: 20px;
-        border-radius: 20px 20px 0 0;
+        padding: 15px 20px;
+        gap: 15px;
     }
     
     .photo-block {
-        display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        gap: 12px;
         align-items: center;
-        gap: 8px;
     }
     
     .avatar {
-        width: 80px;
-        height: 80px;
+        width: 50px;
+        height: 50px;
     }
     
     .name {
         font-size: 16px;
-    }
-
-    .title-block h1 {
-        font-size: 24px;
-        color: #1e4663;
         margin: 0;
-        font-weight: 600;
+    }
+    
+    .title-block {
+        flex: 1;
+        min-width: auto;
+    }
+    
+    .title-block h1 {
+        font-size: 18px;
         border-left: 3px solid #1e4663;
-        padding-left: 15px;
-        text-align: left;
+        padding-left: 12px;
+    }
+    
+    .mobile-nav .nav-btn {
+        height: 48px;
+        font-size: 14px;
+        border-radius: 12px;
+        margin-bottom: 10px;
     }
 
     .divider {
         max-width: 100%;
-        margin: 0 auto;
         height: 4px;
-        background: linear-gradient(#1f6392, #16d6ad);
     }
 
     .content_section {
-        background: white;
-        border-radius: 0;
         padding: 15px 15px;
-        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
     }
 
     .subheadings_info {
-        font-weight: bold;
         font-size: 18px;
         margin-top: 20px;
-        margin-bottom: 8px;
-        color: #1e4663;
-    }
-
-    .subheadings_info:first-of-type {
-        margin-top: 0;
     }
 
     p {
-        margin: 10px 0;
-        line-height: 1.45;
         font-size: 14px;
     }
 
-    .ul_jackdaw {
-        list-style-type: disc;
-        margin-left: 0;
-        padding-left: 20px;
-    }
-    
     .ul_jackdaw li {
         font-size: 14px;
-        margin-bottom: 6px;
-        line-height: 1.4;
     }
 
-    .text_link a, a {
-        text-decoration: none;
-        color: #1f6392;
-    }
-
-    .text_link a:hover, a:hover {
-        color: #09a0ab;
-    }
-
-    /* Футер */
     .footer {
-        background: #107980;
         padding: 15px 20px 25px 20px;
-        border-radius: 0 0 20px 20px;
         text-align: center;
     }
 
-    .footer-container {
-        max-width: 100%;
-        margin: 0 auto;
-    }
-
     .footer-title {
-        color: white;
         font-size: 16px;
-        margin-bottom: 10px;
-        font-weight: 500;
-        font-family: 'Segoe UI', 'Roboto', sans-serif;
         text-align: center;
     }
 
     .footer-social {
-        list-style: none;
-        margin: 0;
-        padding: 10px 0;
-        display: flex;
         justify-content: center;
         gap: 15px;
-    }
-    
-    .footer-social li {
-        display: inline-block;
     }
 
     .social__icon svg {
         width: 32px;
         height: 32px;
-        border-radius: 50%;
-        background: white;
         padding: 5px;
-        transition: all 0.2s ease;
     }
     
-    .social__icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 44px;
-        min-height: 44px;
-    }
-
     .footer-copyright {
-        color: white;
         font-size: 10px;
-        margin-top: 10px;
-        padding-top: 12px;
-        border-top: 1px solid rgba(255, 255, 255, 0.3);
         text-align: center;
     }
 }
 
-/* ===== ДЛЯ ЭКРАНОВ МЕНЬШЕ 600px (2 КНОПКИ В РЯД) ===== */
-@media screen and (max-width: 600px) {
-    .nav-buttons {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+@media screen and (max-width: 480px) {
+    .photo-block {
+        flex-direction: column;
+        align-items: flex-start;
     }
     
-    .nav-btn {
-        height: 44px;
-        font-size: 12px;
-        white-space: nowrap;
-        padding: 0 10px;
-    }
-}
-
-/* ===== ДЛЯ ЭКРАНОВ МЕНЬШЕ 400px (1 КНОПКА В РЯД) ===== */
-@media screen and (max-width: 400px) {
-    .nav-buttons {
-        grid-template-columns: 1fr;
-        gap: 8px;
+    .avatar {
+        width: 40px;
+        height: 40px;
     }
     
-    .nav-btn {
-        height: 42px;
-        font-size: 13px;
+    .name {
+        font-size: 14px;
+    }
+    
+    .title-block h1 {
+        font-size: 16px;
+    }
+    
+    .burger-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+        min-width: 80px;
     }
 }
