@@ -244,21 +244,24 @@ p {
 }
 
 .burger-btn {
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;              /* расстояние между иконкой и текстом */
+    width: auto;            /* автоматическая ширина */
+    height: 50px;           /* фиксированная высота */
+    padding: 0 25px;        /* отступы только по бокам */
     background: #1e4663;
     color: white;
     border: none;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 10px 20px;
-    border-radius: 12px;
+    font-size: 18px;        /* размер текста */
+    font-weight: 500;
+    border-radius: 12px;    /* скругление как у капсулы */
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: inherit;
-    min-width: 100px;
+    min-width: 50px;       /* минимальная ширина */
+    white-space: nowrap;    /* текст не переносится */
 }
 
 .burger-btn:hover {
@@ -332,39 +335,62 @@ p {
     }
     
     .header-container {
-        position: relative;
-        flex-wrap: wrap;
-        justify-content: space-between;
+        display: flex;
         align-items: center;
+        justify-content: space-between;
         padding: 15px 20px;
         gap: 15px;
     }
     
+    /* Фото + имя под ним (вертикально) */
     .photo-block {
-        flex-direction: row;
-        gap: 12px;
+        display: flex;
+        flex-direction: column;
         align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
     }
     
     .avatar {
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
     }
     
     .name {
-        font-size: 16px;
+        display: block;
+        font-size: 12px;
+        font-weight: bold;
+        color: #1e4663;
         margin: 0;
+        text-align: center;
     }
     
+    /* Заголовок - растягивается, справа от фото */
     .title-block {
         flex: 1;
-        min-width: auto;
     }
     
     .title-block h1 {
-        font-size: 18px;
-        border-left: 3px solid #1e4663;
-        padding-left: 12px;
+        font-size: 30px;
+        border-left: 4px solid #1e4663;
+        padding-left: 20px;
+        margin: 0;
+        font-weight: 700;          /* добавили жирность */
+    }
+    
+    /* Бургер справа */
+    .burger-menu {
+        flex-shrink: 0;
+    }
+    
+    .burger-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+        min-width: auto;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .mobile-nav .nav-btn {
@@ -425,26 +451,27 @@ p {
 
 @media screen and (max-width: 480px) {
     .photo-block {
-        flex-direction: column;
-        align-items: flex-start;
+        gap: 5px;
     }
     
     .avatar {
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
     }
     
     .name {
-        font-size: 14px;
+        font-size: 10px;
     }
     
     .title-block h1 {
-        font-size: 16px;
+        font-size: 14px;
+        padding-left: 10px;
+        border-left-width: 2px;
     }
     
     .burger-btn {
-        padding: 8px 16px;
-        font-size: 14px;
-        min-width: 80px;
+        padding: 5px 10px;
+        font-size: 11px;
+        height: 32px;
     }
 }
