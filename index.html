@@ -2,25 +2,23 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Власов Сергей — Тестовые артефакты</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="body_style">
+<body>
     <div class="conteiner-size">
-        <!-- ВЕРХНИЙ БЛОК -->
+        <!-- ВЕРХНИЙ БЛОК (без фото) -->
         <div class="header-container">
-            <div class="photo-block">
-                <img src="image\my_foto\my_foto.png" alt="Моя фотография" class="avatar">
-                <p class="name">Власов Сергей</p>
-            </div>
+            <div class="photo-block" style="display: none;"></div>
             <div class="title-block">
                 <h1>Тестовые артефакты</h1>
             </div>
-            <!-- БУРГЕР-МЕНЮ -->
             <div class="burger-menu">
                 <button class="burger-btn" id="burgerBtn" aria-label="Меню">
-                    ☰
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
             </div>
         </div>
@@ -136,7 +134,6 @@
                     <li>Заголовок тест-кейса должен быть понятным.</li>
                     <li>По ходу выполнения тест-кейса необходимо создать дефект, если он есть. Выполнять дефекты через тестовые прогоны (Test Runs) в системах по управлению тест-кейсами.</li>
                 </ul>
-                
                 <p>Список историй:</p>
                 <ul class="ul_jackdaw">
                     <li><a href="https://rusau.kaiten.ru/p/d/731b641b-545d-4311-a691-c397a21eb1bd" target="_blank">ID1 Регистрация пользователя / User Registration</a></li>
@@ -154,19 +151,13 @@
         </main>
 
         <!-- ПОДВАЛ -->
-        <footer id="footer" class="footer">
+        <footer class="footer">
             <div class="footer-container">
-                <!-- ЗАГОЛОВОК КОНТАКТЫ СВЕРХУ -->
-                <div class="footer-title">
-                    <span></span> Контакты
-                </div>
-    
-                <!-- ДВЕ КОЛОНКИ НА ОДНОМ УРОВНЕ -->
+                <div class="footer-title">Контакты</div>
                 <div class="footer-row">
-                    <!-- ЛЕВАЯ КОЛОНКА -->
                     <div class="footer-contacts">
                         <a href="mailto:nikolaevch96@yandex.ru" class="footer-contact-link">
-                            <div class="contact-icon email-icon">
+                            <div class="contact-icon">
                                 <svg width="18" height="18" viewBox="0 0 40 40" fill="none">
                                     <rect x="4" y="10" width="32" height="20" rx="2" fill="white"/>
                                     <path d="M8 14L20 22L32 14" stroke="#09a0ab" stroke-width="1.5" fill="none"/>
@@ -177,7 +168,7 @@
                             <span>mail</span>
                         </a>
                         <a href="https://t.me/Vlasov_S_Nid96271" target="_blank" class="footer-contact-link">
-                            <div class="contact-icon telegram-icon">
+                            <div class="contact-icon">
                                 <svg width="18" height="18" viewBox="0 0 40 40" fill="none">
                                     <circle cx="20" cy="20" r="20" fill="white"/>
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40C31.0457 40 40 31.0457 40 20C40 8.9543 31.0457 0 20 0ZM29.1027 13.1159C29.698 12.9413 30.3734 13.2618 30.4486 13.8695C30.5494 14.673 30.5399 15.7849 30.4199 16.9647C29.9592 21.1896 28.4903 28.7162 27.7739 31.6816C27.5078 32.8103 27.0048 33.1053 26.2089 32.659C25.2085 32.1004 24.2351 31.4272 23.2972 30.7507C22.3005 30.032 23.6662 30.6234 22.6356 29.8855C21.3361 28.9482 18.4606 26.8194 17.3062 25.6971C16.4912 24.9024 17.6314 24.2954 18.7371 23.2418C19.4903 22.518 22.515 19.7202 24.8274 17.3336C25.6113 16.5228 24.7864 17.158 23.8235 17.9603C22.2447 19.2427 19.6517 21.0568 18.5779 21.8393C17.7043 22.4729 17.0464 22.4718 16.385 21.9268C15.1905 20.9585 13.8561 20.0988 12.7392 19.3968C11.6009 18.6818 11.7538 17.6593 13.1012 17.0194C16.1588 15.5731 21.3414 13.6294 29.1027 13.1159Z" fill="#09a0ab"/>
@@ -186,7 +177,7 @@
                             <span>Telegram</span>
                         </a>
                         <a href="https://github.com/Vlasov-S-N-96" target="_blank" class="footer-contact-link">
-                            <div class="contact-icon github-icon">
+                            <div class="contact-icon">
                                 <svg width="18" height="18" viewBox="0 0 40 40" fill="none">
                                     <circle cx="20" cy="20" r="20" fill="white"/>
                                     <path d="M20 8C13.37 8 8 13.37 8 20C8 25.63 11.93 30.45 17.29 31.96C18.09 32.11 18.36 31.59 18.36 31.14C18.36 30.74 18.35 29.87 18.34 28.96C15.03 29.66 14.25 27.56 14.25 27.56C13.64 26.01 12.76 25.64 12.76 25.64C11.53 24.92 12.83 24.93 12.83 24.93C14.17 25.01 14.86 26.3 14.86 26.3C16.01 28.32 17.88 27.8 18.42 27.36C18.57 26.49 18.94 25.9 19.35 25.56C16.28 25.21 13.05 24.1 13.05 19.45C13.05 18.12 13.56 17.02 14.4 16.17C14.25 15.81 13.79 14.57 14.51 12.93C14.51 12.93 15.59 12.55 18.34 14.08C19.37 13.77 20.47 13.61 21.58 13.61C22.69 13.61 23.79 13.77 24.82 14.08C27.57 12.55 28.65 12.93 28.65 12.93C29.37 14.57 28.91 15.81 28.76 16.17C29.6 17.02 30.11 18.12 30.11 19.45C30.11 24.11 26.87 25.2 23.79 25.55C24.3 25.99 24.76 26.85 24.76 28.18C24.76 30.07 24.74 31.59 24.74 31.14C24.74 31.6 25.01 32.12 25.83 31.96C31.17 30.44 35.08 25.63 35.08 20C35.08 13.37 29.71 8 23.08 8H20Z" fill="#09a0ab"/>
@@ -195,8 +186,6 @@
                             <span>GitHub</span>
                         </a>
                     </div>
-    
-                    <!-- ПРАВАЯ КОЛОНКА -->
                     <div class="footer-right">
                         <div class="footer-location">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
@@ -211,13 +200,9 @@
                         </div>
                     </div>
                 </div>
-    
-                <!-- РАЗДЕЛИТЕЛЬ -->
-                <div class="footer-divider">
-                    <!-- КОПИРАЙТ -->
-                    <div class="footer-copyright">
-                        <p>© 2026 Власов Сергей — QA Engineer / Тестировщик ПО</p>
-                    </div>
+                <div class="footer-divider"></div>
+                <div class="footer-copyright">
+                    <p>© 2026 Власов Сергей — QA Engineer / Тестировщик ПО</p>
                 </div>
             </div>
         </footer>
