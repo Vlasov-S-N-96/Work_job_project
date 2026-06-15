@@ -1,6 +1,5 @@
 // Бургер-меню для мобильной версии
 (function() {
-    
     function initBurgerMenu() {
         const burgerBtn = document.getElementById('burgerBtn');
         const mobileNav = document.getElementById('mobileNav');
@@ -15,12 +14,7 @@
             burgerBtn.classList.toggle('active');
             mobileNav.classList.toggle('active');
             menuOverlay.classList.toggle('active');
-            
-            if (mobileNav.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
         }
         
         function closeMenu() {
@@ -49,10 +43,7 @@
                     e.preventDefault();
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        targetElement.scrollIntoView({ 
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
                 }
             });
@@ -66,12 +57,11 @@
     }
 })();
 
-// ===== АКТИВАЦИЯ КНОПОК НАВИГАЦИИ ПРИ СКРОЛЛЕ =====
+// Активация кнопок навигации при скролле
 (function() {
     function initNavHighlight() {
         const sections = document.querySelectorAll('section');
         const navBtns = document.querySelectorAll('.nav-buttons .nav-btn');
-        
         if (sections.length === 0 || navBtns.length === 0) return;
         
         const observer = new IntersectionObserver((entries) => {
@@ -98,11 +88,10 @@
     }
 })();
 
-// ===== ПЛАВНАЯ ПРОКРУТКА ДЛЯ ДЕСКТОПНЫХ КНОПОК =====
+// Плавная прокрутка для десктопных кнопок
 (function() {
     function initSmoothScroll() {
         const desktopLinks = document.querySelectorAll('.nav-buttons .nav-btn');
-        
         desktopLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 const targetId = this.getAttribute('href');
@@ -110,10 +99,7 @@
                     e.preventDefault();
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        targetElement.scrollIntoView({ 
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
                 }
             });
