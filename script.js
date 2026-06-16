@@ -5,10 +5,7 @@
         const mobileNav = document.getElementById('mobileNav');
         const menuOverlay = document.getElementById('menuOverlay');
         
-        if (!burgerBtn || !mobileNav || !menuOverlay) {
-            console.warn('Элементы меню не найдены');
-            return;
-        }
+        if (!burgerBtn || !mobileNav || !menuOverlay) return;
         
         function toggleMenu() {
             burgerBtn.classList.toggle('active');
@@ -26,53 +23,38 @@
             }
         }
         
-        burgerBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMenu();
-        });
-        
+        burgerBtn.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', closeMenu);
         
-        const mobileLinks = mobileNav.querySelectorAll('.nav-btn');
-        mobileLinks.forEach(link => {
+        document.querySelectorAll('.mobile-nav .nav-btn').forEach(link => {
             link.addEventListener('click', function(e) {
                 closeMenu();
                 const targetId = this.getAttribute('href');
                 if (targetId && targetId.startsWith('#')) {
                     e.preventDefault();
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
+                    const target = document.querySelector(targetId);
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
     }
     
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initBurgerMenu);
-    } else {
-        initBurgerMenu();
-    }
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initBurgerMenu) : initBurgerMenu();
 })();
 
-// Активация кнопок навигации при скролле
+// ===== АКТИВАЦИЯ КНОПОК НАВИГАЦИИ ПРИ СКРОЛЛЕ =====
 (function() {
     function initNavHighlight() {
         const sections = document.querySelectorAll('section');
         const navBtns = document.querySelectorAll('.nav-buttons .nav-btn');
-        if (sections.length === 0 || navBtns.length === 0) return;
+        if (!sections.length || !navBtns.length) return;
         
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const id = entry.target.getAttribute('id');
+                    const id = entry.target.id;
                     navBtns.forEach(btn => {
-                        btn.classList.remove('active');
-                        if (btn.getAttribute('href') === `#${id}`) {
-                            btn.classList.add('active');
-                        }
+                        btn.classList.toggle('active', btn.getAttribute('href') === `#${id}`);
                     });
                 }
             });
@@ -81,34 +63,103 @@
         sections.forEach(section => observer.observe(section));
     }
     
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initNavHighlight);
-    } else {
-        initNavHighlight();
-    }
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initNavHighlight) : initNavHighlight();
 })();
 
-// Плавная прокрутка для десктопных кнопок
+// ===== ПЛАВНАЯ ПРОКРУТКА ДЛЯ ДЕСКТОПНЫХ КНОПОК =====
 (function() {
     function initSmoothScroll() {
-        const desktopLinks = document.querySelectorAll('.nav-buttons .nav-btn');
-        desktopLinks.forEach(link => {
+        document.querySelectorAll('.nav-buttons .nav-btn').forEach(link => {
             link.addEventListener('click', function(e) {
                 const targetId = this.getAttribute('href');
                 if (targetId && targetId.startsWith('#')) {
                     e.preventDefault();
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
+                    const target = document.querySelector(targetId);
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
     }
     
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initSmoothScroll);
-    } else {
-        initSmoothScroll();
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initSmoothScroll) : initSmoothScroll();
+})();
+
+// ===== АККОРДЕОН ДЛЯ ЭТАПОВ =====
+(function() {
+    function initAccordions() {
+        const stageGroups = document.querySelectorAll('.stage-group');
+        stageGroups.forEach(group => {
+            group.classList.remove('open');
+            const header = group.querySelector('.stage-header');
+            const btn = group.querySelector('.toggle-btn');
+            
+            function toggle(e) {
+                group.classList.toggle('open');
+            }
+            
+            if (header) header.addEventListener('click', toggle);
+            if (btn) btn.addEventListener('click', (e) => e.stopPropagation());
+        });
     }
+    
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initAccordions) : initAccordions();
+})();
+
+// ===== СЛАЙДЕРЫ =====
+(function() {
+    function initSlider(sliderId, prevBtnId, nextBtnId, dotsId) {
+        const track = document.getElementById(sliderId);
+        const slides = track?.querySelectorAll('.slider-slide');
+        const prevBtn = document.getElementById(prevBtnId);
+        const nextBtn = document.getElementById(nextBtnId);
+        const dotsContainer = document.getElementById(dotsId);
+        
+        if (!track || !slides || slides.length === 0) return;
+        
+        let currentIndex = 0;
+        const total = slides.length;
+        
+        function updateSlider() {
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            if (dotsContainer) {
+                dotsContainer.querySelectorAll('.dot').forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
+        }
+        
+        function createDots() {
+            if (!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < total; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (i === currentIndex) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    currentIndex = i;
+                    updateSlider();
+                });
+                dotsContainer.appendChild(dot);
+            }
+        }
+        
+        if (prevBtn) prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + total) % total;
+            updateSlider();
+        });
+        if (nextBtn) nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % total;
+            updateSlider();
+        });
+        
+        createDots();
+        setTimeout(updateSlider, 50);
+    }
+    
+    function initAllSliders() {
+        initSlider('sparkSlider', 'prevSparkBtn', 'nextSparkBtn', 'sparkDots');
+        initSlider('sqlSlider', 'prevSqlBtn', 'nextSqlBtn', 'sqlDots');
+    }
+    
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initAllSliders) : initAllSliders();
 })();
