@@ -27,7 +27,7 @@ body {
 .header-container {
     display: flex;
     align-items: center;
-    justify-content: center; /* центрируем содержимое */
+    justify-content: center;
     background: white;
     padding: 25px 40px;
     gap: 40px;
@@ -48,10 +48,9 @@ body {
     color: #1e4663;
     margin: 0;
     font-weight: 700;
-    border-left: none;        /* убираем черту */
-    padding-left: 0;           /* убираем отступ */
-    background: none;          /* убираем градиент */
-    color: #1e4663;            /* сплошной цвет */
+    border-left: none;
+    padding-left: 0;
+    background: none;
 }
 
 /* ===== БУРГЕР-МЕНЮ ===== */
@@ -196,7 +195,7 @@ body {
     font-size: 14px;
 }
 
-/* ===== ОСНОВНОЙ КОНТЕНТ (сплошная страница, без карточек) ===== */
+/* ===== ОСНОВНОЙ КОНТЕНТ ===== */
 .content_section {
     background: white;
     padding: 30px 40px;
@@ -557,7 +556,6 @@ pre {
 
     .title-block h1 {
         font-size: 22px;
-        /* наследуем border-left: none и цвет из общих стилей */
         white-space: nowrap;
     }
 
@@ -654,7 +652,7 @@ pre {
     }
 }
 
-/* Специальные правила для очень узких экранов (370–432px) */
+/* (370–432px) */
 @media (min-width: 370px) and (max-width: 432px) {
     .title-block h1 {
         font-size: 14px !important;
@@ -662,7 +660,7 @@ pre {
     }
 }
 
-/* Специальные правила для 480–504px */
+/* 480–504px */
 @media (min-width: 480px) and (max-width: 504px) {
     .title-block h1 {
         font-size: 18px !important;
