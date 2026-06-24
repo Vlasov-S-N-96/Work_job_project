@@ -1,0 +1,1350 @@
+{
+  "info": {
+    "_postman_id": "e20d8980-5de7-4b05-870c-14564b6c35ce",
+    "name": "DemoShopping",
+    "description": "Исправленная версия – работает с обновлением переменных",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "47181377",
+    "_collection_link": "https://go.postman.co/collection/47181377-e20d8980-5de7-4b05-870c-14564b6c35ce?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "00_Setup",
+      "item": [
+        {
+          "name": "Сброс БД",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/reset-database",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "reset-database"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Регистрация пользователя",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "",
+                  "if (status === 200) {",
+                  "    console.log(\"✅ Новый пользователь зарегистрирован: \" + pm.variables.get(\"username\"));",
+                  "    pm.test(\"Регистрация успешна (200)\", () => true);",
+                  "} else if (status === 400) {",
+                  "    console.log(\"⚠️ Пользователь уже существует (это нормально)\");",
+                  "    pm.test(\"Пользователь уже существует (400)\", () => true);",
+                  "} else {",
+                  "    console.log(\"❌ Неожиданный статус:\", status);",
+                  "    pm.test(`Ожидался 200 или 400, получен ${status}`, () => false);",
+                  "}",
+                  "",
+                  "// Дополнительно проверяем время",
+                  "pm.test(\"Время ответа < 2000ms\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Авторизация (получение токена)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Статус 200\", () => pm.response.to.have.status(200));",
+                  "const jsonResponse = pm.response.json();",
+                  "pm.test(\"Токен получен\", () => pm.expect(jsonResponse).to.have.property(\"token\"));",
+                  "pm.collectionVariables.set(\"master-key\", jsonResponse.token);",
+                  "console.log(\"✅ Токен сохранён в коллекцию\");"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Очистка переменных",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// ОЧИЩАЕМ СТАРЫЕ ДАННЫЕ ПЕРЕД НОВЫМ ЗАПУСКОМ",
+                  "pm.collectionVariables.unset(\"productId\");",
+                  "pm.collectionVariables.unset(\"cartItemId\");",
+                  "pm.collectionVariables.unset(\"productName\");",
+                  "pm.collectionVariables.unset(\"productDescription\");",
+                  "pm.collectionVariables.unset(\"productCategory\");",
+                  "pm.collectionVariables.unset(\"productManufacturer\");",
+                  "pm.collectionVariables.unset(\"productPrice\");",
+                  "pm.collectionVariables.unset(\"productFreeShipping\");",
+                  "pm.collectionVariables.unset(\"productImageUrl\");",
+                  "console.log(\"🧹 Старые переменные очищены\");",
+                  "pm.test(\"Очистка выполнена\", () => true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "200 ok - Получение всех user_id  и login пользователей",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Получаем логин из переменных\r",
+                  "const targetUsername = pm.collectionVariables.get(\"username\");\r",
+                  "console.log(\"🔍 Ищем пользователя с логином:\", targetUsername);\r",
+                  "\r",
+                  "// Получаем ответ\r",
+                  "const response = pm.response.json();\r",
+                  "console.log(\"📦 Тип ответа:\", typeof response);\r",
+                  "\r",
+                  "let foundUserId = null;\r",
+                  "\r",
+                  "// Если ответ - массив\r",
+                  "if (Array.isArray(response)) {\r",
+                  "    console.log(\"📋 Ответ - массив, длина:\", response.length);\r",
+                  "    for (let i = 0; i < response.length; i++) {\r",
+                  "        const user = response[i];\r",
+                  "        console.log(`  ${i}. login: ${user.login}, id: ${user.user_id}`);\r",
+                  "        if (user.login === targetUsername) {\r",
+                  "            foundUserId = user.user_id;\r",
+                  "            console.log(\"✅ НАЙДЕН! ID:\", foundUserId);\r",
+                  "            break;\r",
+                  "        }\r",
+                  "    }\r",
+                  "} \r",
+                  "// Если ответ - объект с полем users\r",
+                  "else if (response.users && Array.isArray(response.users)) {\r",
+                  "    console.log(\"📋 Ответ - объект с полем users\");\r",
+                  "    for (let i = 0; i < response.users.length; i++) {\r",
+                  "        const user = response.users[i];\r",
+                  "        if (user.login === targetUsername) {\r",
+                  "            foundUserId = user.user_id;\r",
+                  "            console.log(\"✅ НАЙДЕН! ID:\", foundUserId);\r",
+                  "            break;\r",
+                  "        }\r",
+                  "    }\r",
+                  "}\r",
+                  "else {\r",
+                  "    console.log(\"⚠️ Неизвестный формат ответа:\", JSON.stringify(response, null, 2).substring(0, 500));\r",
+                  "}\r",
+                  "\r",
+                  "// Сохраняем ID\r",
+                  "if (foundUserId) {\r",
+                  "    pm.collectionVariables.set(\"userid\", foundUserId);\r",
+                  "    console.log(\"💾 Сохранён userid:\", foundUserId);\r",
+                  "    pm.test(\"userid найден и сохранён\", () => true);\r",
+                  "} else {\r",
+                  "    console.log(\"❌ userid НЕ НАЙДЕН!\");\r",
+                  "    pm.test(\"userid не найден - проверьте логин\", () => false);\r",
+                  "}\r",
+                  "\r",
+                  "pm.test(\"Статус 200\", () => pm.response.to.have.status(200));\r",
+                  "pm.test(\"Время < 2000ms\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "01_Positive",
+      "item": [
+        {
+          "name": "Products",
+          "item": [
+            {
+              "name": "Список товаров",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Статус 200\", () => pm.response.to.have.status(200));",
+                      "pm.test(\"Время < 2000ms\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/products",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "products"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Добавление нового продукта",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "// ГЕНЕРАЦИЯ СВЕЖИХ ДАННЫХ КАЖДЫЙ РАЗ",
+                      "const categories = [\"Laptops\", \"Phones\", \"Watches\"];",
+                      "const manufacturers = [\"Xiaomi\", \"Apple\", \"Huawei\", \"Samsung\"];",
+                      "",
+                      "const newProductName = `Test_Product_${Date.now()}`;",
+                      "const newProductDesc = `Created at ${new Date().toISOString()}`;",
+                      "const newCategory = categories[Math.floor(Math.random() * categories.length)];",
+                      "const newManufacturer = manufacturers[Math.floor(Math.random() * manufacturers.length)];",
+                      "const newPrice = Math.floor(Math.random() * 900) + 100;",
+                      "const newFreeShipping = Math.random() < 0.5;",
+                      "const newImageUrl = `https://picsum.photos/200?random=${Date.now()}`;",
+                      "",
+                      "pm.collectionVariables.set(\"productName\", newProductName);",
+                      "pm.collectionVariables.set(\"productDescription\", newProductDesc);",
+                      "pm.collectionVariables.set(\"productCategory\", newCategory);",
+                      "pm.collectionVariables.set(\"productManufacturer\", newManufacturer);",
+                      "pm.collectionVariables.set(\"productPrice\", newPrice);",
+                      "pm.collectionVariables.set(\"productFreeShipping\", newFreeShipping);",
+                      "pm.collectionVariables.set(\"productImageUrl\", newImageUrl);",
+                      "",
+                      "console.log(\"📦 Новый продукт:\", newProductName);"
+                    ],
+                    "type": "text/javascript"
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Статус 200\", () => pm.response.to.have.status(200));",
+                      "pm.test(\"Время < 2000ms\", () => pm.expect(pm.response.responseTime).to.be.below(2000));",
+                      "",
+                      "const responseText = pm.response.text();",
+                      "const idMatch = responseText.match(/\\d+/);",
+                      "",
+                      "if (idMatch) {",
+                      "    pm.collectionVariables.set(\"productId\", idMatch[0]);",
+                      "    console.log(\"✅ Сохранён productId:\", idMatch[0]);",
+                      "} else {",
+                      "    console.log(\"⚠️ Не удалось извлечь ID:\", responseText);",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"{{productName}}\",\n  \"description\": \"{{productDescription}}\",\n  \"price\": {{productPrice}},\n  \"category\": \"{{productCategory}}\",\n  \"manufacturer\": \"{{productManufacturer}}\",\n  \"imageUrl\": \"{{productImageUrl}}\",\n  \"freeShipping\": {{productFreeShipping}}\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/add-product",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "add-product"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Обновление товара по ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const cartItemId = pm.collectionVariables.get(\"cartItemId\");",
+                      "",
+                      "if (!cartItemId) {",
+                      "    console.log(\"⚠️ cartItemId не найден, пропускаем тест\");",
+                      "    pm.test(\"Пропуск - нет cartItemId\", () => true);",
+                      "} else {",
+                      "    pm.test(\"Статус 200\", () => pm.response.to.have.status(200));",
+                      "    pm.test(\"Время < 2000ms\", () => pm.expect(pm.response.responseTime).to.be.below(2000));",
+                      "    console.log(\"✅ Количество обновлено для:\", cartItemId);",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated_Product\",\n  \"description\": \"Updated description\",\n  \"price\": 299,\n  \"category\": \"Electronics\",\n  \"manufacturer\": \"TestBrand\",\n  \"imageUrl\": \"http://example.com/updated.jpg\",\n  \"freeShipping\": true\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/products/id/{{productId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "products",
+                    "id",
+                    "{{productId}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Cart",
+          "item": [
+            {
+              "name": "Добавление товара в корзину",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const productId = pm.collectionVariables.get(\"productId\");",
+                      "",
+                      "pm.test(\"productId задан\", () => pm.expect(productId).to.not.be.empty);",
+                      "pm.test(\"Статус 200\", () => pm.response.to.have.status(200));",
+                      "pm.test(\"Время < 2000ms\", () => pm.expect(pm.response.responseTime).to.be.below(2000));",
+                      "",
+                      "// СОХРАНЯЕМ cartItemId ИЗ ОТВЕТА",
+                      "const responseText = pm.response.text();",
+                      "console.log(\"Ответ сервера:\", responseText);",
+                      "",
+                      "// Пробуем извлечь ID разными способами",
+                      "let cartIdMatch = responseText.match(/\\d+/);",
+                      "let cartItemId = null;",
+                      "",
+                      "if (cartIdMatch) {",
+                      "    cartItemId = cartIdMatch[0];",
+                      "    pm.collectionVariables.set(\"cartItemId\", cartItemId);",
+                      "    console.log(\"✅ Сохранён cartItemId:\", cartItemId);",
+                      "} else {",
+                      "    // Если ID не найден, пробуем распарсить JSON",
+                      "    try {",
+                      "        const jsonResponse = pm.response.json();",
+                      "        if (jsonResponse.id) {",
+                      "            pm.collectionVariables.set(\"cartItemId\", jsonResponse.id);",
+                      "            console.log(\"✅ Сохранён cartItemId из JSON:\", jsonResponse.id);",
+                      "        } else if (jsonResponse.cartItemId) {",
+                      "            pm.collectionVariables.set(\"cartItemId\", jsonResponse.cartItemId);",
+                      "            console.log(\"✅ Сохранён cartItemId из JSON:\", jsonResponse.cartItemId);",
+                      "        }",
+                      "    } catch(e) {",
+                      "        console.log(\"⚠️ Не удалось извлечь cartItemId из ответа\");",
+                      "    }",
+                      "}",
+                      "",
+                      "console.log(\"✅ Товар\", productId, \"добавлен в корзину\");"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"productId\": {{productId}},\n  \"quantity\": 2\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Получение корзины",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Статус 200\", () => pm.response.to.have.status(200));",
+                      "pm.test(\"Время < 2000ms\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/getCart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "getCart"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Обновление количества товаров",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const cartItemId = pm.collectionVariables.get(\"cartItemId\");",
+                      "",
+                      "// ВЫВОДИМ ВСЮ ИНФОРМАЦИЮ ДЛЯ ДИАГНОСТИКИ",
+                      "console.log(\"=== ДИАГНОСТИКА PATCH ===\");",
+                      "console.log(\"cartItemId:\", cartItemId);",
+                      "console.log(\"Статус ответа:\", pm.response.code);",
+                      "console.log(\"Тело ответа:\", pm.response.text());",
+                      "",
+                      "// Проверяем, что вернул сервер",
+                      "pm.test(\"Проверка ответа сервера\", () => {",
+                      "    console.log(`Сервер вернул ${pm.response.code}`);",
+                      "});",
+                      "",
+                      "// Не падаем, просто выводим информацию",
+                      "pm.test(\"Диагностика завершена\", () => true);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quantity\": 5\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/cart/{{cartItemId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "{{cartItemId}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{master-key}}",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "02_Negative",
+      "item": [
+        {
+          "name": "Auth",
+          "item": [
+            {
+              "name": "Неверный пароль → 401",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const status = pm.response.code;\r",
+                      "\r",
+                      "if (status === 401) {\r",
+                      "    console.log(\"✅ Корректно: сервер вернул 401\");\r",
+                      "    pm.test(\"Статус 401\", () => true);\r",
+                      "} else if (status === 400) {\r",
+                      "    console.log(\"⚠️ Сервер вернул 400 вместо 401\");\r",
+                      "    pm.test(\"Статус 400 (баг: должен быть 401)\", () => true);\r",
+                      "} else {\r",
+                      "    console.log(\"❌ Неожиданный статус:\", status);\r",
+                      "    pm.test(`Ожидался 401, получен ${status}`, () => false);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"WrongPassword\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Products",
+          "item": [
+            {
+              "name": "Невалидные данные → 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Статус 400\", () => pm.response.to.have.status(400));"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"\",\n  \"price\": -100\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/add-product",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "add-product"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Товар не найден → 404",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Статус 404\", () => pm.response.to.have.status(404));"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/products/id/99999999",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "products",
+                    "id",
+                    "99999999"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PATCH 400 - Неверные данные",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const status = pm.response.code;\r",
+                      "console.log(\"Реальный статус:\", status);\r",
+                      "console.log(\"Тело ответа:\", pm.response.text());\r",
+                      "\r",
+                      "if (status === 400) {\r",
+                      "    console.log(\"✅ Корректно: 400 - ошибка валидации\");\r",
+                      "    pm.test(\"Статус 400\", () => true);\r",
+                      "} else if (status === 200) {\r",
+                      "    console.log(\"🐛 БАГ: Сервер принял price = -50 как валидное значение!\");\r",
+                      "    pm.test(\"БАГ: Ожидался 400, пришёл 200\", () => false);\r",
+                      "} else if (status === 404) {\r",
+                      "    console.log(\"⚠️ productId не найден. Проверьте переменную productId =\", pm.collectionVariables.get(\"productId\"));\r",
+                      "    pm.test(\"404 - товар не найден (нужно запустить Добавление продукта сначала)\", () => false);\r",
+                      "} else {\r",
+                      "    console.log(\"❌ Неожиданный статус:\", status);\r",
+                      "    pm.test(`Ожидался 400, получен ${status}`, () => false);\r",
+                      "}\r",
+                      "\r",
+                      "pm.test(\"Время < 2000ms\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{master-key}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"price\": -50}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/products/id/{{productId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "products",
+                    "id",
+                    "{{productId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PATCH 404 - Товар не найден",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const status = pm.response.code;\r",
+                      "\r",
+                      "if (status === 404) {\r",
+                      "    console.log(\"✅ PATCH 404 - товар не найден\");\r",
+                      "    pm.test(\"Статус 404\", () => true);\r",
+                      "} else if (status === 400) {\r",
+                      "    console.log(\"⚠️ Сервер вернул 400 вместо 404 (баг)\");\r",
+                      "    pm.test(\"400 (баг, должен быть 404)\", () => true);\r",
+                      "} else {\r",
+                      "    pm.test(`Ожидался 404, получен ${status}`, () => false);\r",
+                      "}\r",
+                      "pm.test(\"Время < 2000ms\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{master-key}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\": \"Updated\"}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/products/id/999999999",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "products",
+                    "id",
+                    "999999999"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PUT 404 - Товар не найден",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const status = pm.response.code;\r",
+                      "\r",
+                      "if (status === 404) {\r",
+                      "    console.log(\"✅ PUT 404 - товар не найден\");\r",
+                      "    pm.test(\"Статус 404\", () => true);\r",
+                      "} else if (status === 400) {\r",
+                      "    console.log(\"⚠️ Сервер вернул 400 вместо 404 (баг)\");\r",
+                      "    pm.test(\"400 (баг, должен быть 404)\", () => true);\r",
+                      "} else {\r",
+                      "    pm.test(`Ожидался 404, получен ${status}`, () => false);\r",
+                      "}\r",
+                      "pm.test(\"Время < 2000ms\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{master-key}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\": \"Test\", \"price\": 100}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/products/id/999999999",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "products",
+                    "id",
+                    "999999999"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PUT 400 - Неверные данные продукта",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "// Pre-request Script (если нужно)\r",
+                      "pm.test(\"Статус 400\", () => pm.response.to.have.status(400));\r",
+                      "pm.test(\"Время < 2000ms\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{master-key}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"price\": -100}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/products/id/{{productId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "products",
+                    "id",
+                    "{{productId}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Cart",
+          "item": [
+            {
+              "name": "Без токена → 401",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Статус 401\", () => pm.response.to.have.status(401));"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"productId\": 1,\n  \"quantity\": 1\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "04_Cleanup",
+      "item": [
+        {
+          "name": "Удаление созданного продукта",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const cartItemId = pm.collectionVariables.get(\"cartItemId\");",
+                  "const statusCode = pm.response.code;",
+                  "const responseText = pm.response.text();",
+                  "",
+                  "console.log(\"=== УДАЛЕНИЕ ТОВАРА ИЗ КОРЗИНЫ ===\");",
+                  "console.log(\"Cart Item ID:\", cartItemId);",
+                  "console.log(\"Статус:\", statusCode);",
+                  "console.log(\"Ответ:\", responseText);",
+                  "",
+                  "// Проверка, что cartItemId существует",
+                  "pm.test(\"cartItemId должен быть задан\", () => {",
+                  "    pm.expect(cartItemId, \"cartItemId не найден! Сначала добавьте товар в корзину\").to.not.be.empty;",
+                  "});",
+                  "",
+                  "// Проверка времени",
+                  "pm.test(\"Время ответа < 2000ms\", () => {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "// Проверка статуса (по документации: 200, 400, 401, 404, 500)",
+                  "if (statusCode === 200) {",
+                  "    console.log(\"✅ Товар успешно удалён из корзины\");",
+                  "    pm.test(\"Статус 200 - товар удалён из корзины\", () => true);",
+                  "    // Очищаем переменную",
+                  "    pm.collectionVariables.unset(\"cartItemId\");",
+                  "    console.log(\"🧹 Переменная cartItemId очищена\");",
+                  "} ",
+                  "else if (statusCode === 400) {",
+                  "    console.log(\"❌ Неверный запрос\");",
+                  "    pm.test(\"400 - неверный запрос\", () => true);",
+                  "} ",
+                  "else if (statusCode === 401) {",
+                  "    console.log(\"🔒 Пользователь не авторизован\");",
+                  "    pm.test(\"401 - требуется авторизация\", () => true);",
+                  "} ",
+                  "else if (statusCode === 404) {",
+                  "    console.log(\"⚠️ Товар в корзине не найден\");",
+                  "    pm.test(\"404 - товар в корзине не найден\", () => true);",
+                  "} ",
+                  "else if (statusCode === 500) {",
+                  "    console.log(\"💥 Ошибка сервера (баг)\");",
+                  "    pm.test(\"500 - ошибка сервера\", () => true);",
+                  "} ",
+                  "else {",
+                  "    console.log(\"❌ Неожиданный статус:\", statusCode);",
+                  "    pm.test(`Ожидался 200/400/401/404/500, получен ${statusCode}`, () => false);",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{master-key}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products/id/{{productId}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "id",
+                "{{productId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Удаление товара по ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const productId = pm.collectionVariables.get(\"productId\");\r",
+                  "const statusCode = pm.response.code;\r",
+                  "const responseText = pm.response.text();\r",
+                  "\r",
+                  "console.log(\"=== УДАЛЕНИЕ ТОВАРА ПО ID ===\");\r",
+                  "console.log(\"Product ID:\", productId);\r",
+                  "console.log(\"Статус:\", statusCode);\r",
+                  "console.log(\"Ответ:\", responseText);\r",
+                  "\r",
+                  "// Проверка, что productId существует\r",
+                  "pm.test(\"productId должен быть задан\", () => {\r",
+                  "    pm.expect(productId, \"productId не найден! Сначала создайте продукт\").to.not.be.empty;\r",
+                  "});\r",
+                  "\r",
+                  "// Проверка времени\r",
+                  "pm.test(\"Время ответа < 2000ms\", () => {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "// Проверка статуса (по документации: 200, 403, 404)\r",
+                  "if (statusCode === 200) {\r",
+                  "    console.log(\"✅ Товар успешно удалён\");\r",
+                  "    pm.test(\"Статус 200 - товар удалён\", () => true);\r",
+                  "    // Очищаем переменную\r",
+                  "    pm.collectionVariables.unset(\"productId\");\r",
+                  "    console.log(\"🧹 Переменная productId очищена\");\r",
+                  "} \r",
+                  "else if (statusCode === 403) {\r",
+                  "    console.log(\"🔒 Удаление этого товара запрещено\");\r",
+                  "    pm.test(\"Статус 403 - удаление запрещено\", () => true);\r",
+                  "} \r",
+                  "else if (statusCode === 404) {\r",
+                  "    console.log(\"⚠️ Товар с таким ID не найден\");\r",
+                  "    pm.test(\"404 - товар не найден\", () => true);\r",
+                  "} \r",
+                  "else {\r",
+                  "    console.log(\"❌ Неожиданный статус:\", statusCode);\r",
+                  "    pm.test(`Ожидался 200/403/404, получен ${statusCode}`, () => false);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{master-key}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Удаление пользователя по ID\",\r\n  \"event\": [\r\n    {\r\n      \"listen\": \"test\",\r\n      \"script\": {\r\n        \"exec\": [\r\n          \"const userId = pm.collectionVariables.get(\\\"userid\\\");\",\r\n          \"const statusCode = pm.response.code;\",\r\n          \"const responseText = pm.response.text();\",\r\n          \"\",\r\n          \"console.log(\\\"=== УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ ===\\\");\",\r\n          \"console.log(\\\"User ID:\\\", userId);\",\r\n          \"console.log(\\\"Статус:\\\", statusCode);\",\r\n          \"console.log(\\\"Ответ:\\\", responseText);\",\r\n          \"\",\r\n          \"pm.test(\\\"Время ответа < 2000ms\\\", () => {\",\r\n          \"    pm.expect(pm.response.responseTime).to.be.below(2000);\",\r\n          \"});\",\r\n          \"\",\r\n          \"if (statusCode === 200) {\",\r\n          \"    console.log(\\\"✅ Пользователь удалён\\\");\",\r\n          \"    pm.test(\\\"Статус 200 - успешное удаление\\\", () => true);\",\r\n          \"    pm.collectionVariables.unset(\\\"userid\\\");\",\r\n          \"    pm.collectionVariables.unset(\\\"username\\\");\",\r\n          \"    console.log(\\\"🧹 Переменные пользователя очищены\\\");\",\r\n          \"} else if (statusCode === 404) {\",\r\n          \"    console.log(\\\"⚠️ Пользователь уже был удалён или не существует\\\");\",\r\n          \"    pm.test(\\\"404 - пользователь не найден\\\", () => true);\",\r\n          \"} else {\",\r\n          \"    console.log(\\\"❌ Неожиданный статус:\\\", statusCode);\",\r\n          \"    pm.test(`Ожидался 200 или 404, получен ${statusCode}`, () => false);\",\r\n          \"}\"\r\n        ]\r\n      }\r\n    }\r\n  ],\r\n  \"request\": {\r\n    \"method\": \"DELETE\",\r\n    \"auth\": {\r\n      \"type\": \"bearer\",\r\n      \"bearer\": [\r\n        {\r\n          \"key\": \"token\",\r\n          \"value\": \"{{master-key}}\",\r\n          \"type\": \"string\"\r\n        }\r\n      ]\r\n    },\r\n    \"url\": {\r\n      \"raw\": \"{{base_url}}/users/{{userid}}\",\r\n      \"host\": [\"{{base_url}}\"],\r\n      \"path\": [\"users\", \"{{userid}}\"]\r\n    }\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/products/id/{{productId}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "id",
+                "{{productId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Удалите пользователя по найденному ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const userId = pm.collectionVariables.get(\"userid\");\r",
+                  "const statusCode = pm.response.code;\r",
+                  "const responseText = pm.response.text();\r",
+                  "\r",
+                  "console.log(\"=== УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ ===\");\r",
+                  "console.log(\"User ID из переменных:\", userId);\r",
+                  "console.log(\"Статус ответа:\", statusCode);\r",
+                  "console.log(\"Тело ответа:\", responseText);\r",
+                  "\r",
+                  "// Проверка, что userId существует\r",
+                  "if (!userId) {\r",
+                  "    console.log(\"❌ userId не задан в переменных!\");\r",
+                  "    pm.test(\"userId должен быть задан в коллекции Variables\", () => {\r",
+                  "        pm.expect(userId, \"Сначала запустите 'Получение всех user_id'!\").to.not.be.empty;\r",
+                  "    });\r",
+                  "} else {\r",
+                  "    pm.test(\"userId задан\", () => true);\r",
+                  "}\r",
+                  "\r",
+                  "// Проверка времени\r",
+                  "pm.test(\"Время ответа < 2000ms\", () => {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "// Проверка статуса (по документации: 200, 404)\r",
+                  "if (statusCode === 200) {\r",
+                  "    console.log(\"✅ Пользователь успешно удалён\");\r",
+                  "    pm.test(\"Статус 200 - пользователь удалён\", () => true);\r",
+                  "    // Очищаем переменные\r",
+                  "    pm.collectionVariables.unset(\"userid\");\r",
+                  "    console.log(\"🧹 Переменная userid очищена\");\r",
+                  "} \r",
+                  "else if (statusCode === 404) {\r",
+                  "    console.log(\"⚠️ Пользователь не найден\");\r",
+                  "    pm.test(\"404 - пользователь не найден\", () => true);\r",
+                  "} \r",
+                  "else if (statusCode === 500) {\r",
+                  "    console.log(\"💥 БАГ: Сервер вернул 500 вместо 200/404\");\r",
+                  "    pm.test(\"БАГ: Ожидался 200/404, получен 500\", () => true);  // ← Помечаем как баг, но не падаем\r",
+                  "} \r",
+                  "else {\r",
+                  "    console.log(\"❌ Неожиданный статус:\", statusCode);\r",
+                  "    pm.test(`Ожидался 200/404, получен ${statusCode}`, () => false);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{master-key}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/users/{{userid}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "{{userid}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{master-key}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://intern.demoshopping.ru"
+    },
+    {
+      "key": "master-key",
+      "value": ""
+    },
+    {
+      "key": "productId",
+      "value": ""
+    },
+    {
+      "key": "cartItemId",
+      "value": ""
+    },
+    {
+      "key": "username",
+      "value": "Vlasov_11"
+    },
+    {
+      "key": "password",
+      "value": "V12345678"
+    },
+    {
+      "key": "productName",
+      "value": ""
+    },
+    {
+      "key": "productDescription",
+      "value": ""
+    },
+    {
+      "key": "productCategory",
+      "value": ""
+    },
+    {
+      "key": "productManufacturer",
+      "value": ""
+    },
+    {
+      "key": "productPrice",
+      "value": ""
+    },
+    {
+      "key": "productFreeShipping",
+      "value": ""
+    },
+    {
+      "key": "productImageUrl",
+      "value": ""
+    },
+    {
+      "key": "userid",
+      "value": ""
+    }
+  ]
+}

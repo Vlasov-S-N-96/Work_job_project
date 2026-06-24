@@ -1,0 +1,99 @@
+# 1. Создайте файл bash1.txt.
+Vlasov96@ASU-VSN MINGW64 /e/WorkSpace/Git/git_bush/project/BASH_TRAINING
+$ touch bash1.txt
+
+# 2. Открыть домашнюю директорию.
+Vlasov96@ASU-VSN MINGW64 /e/WorkSpace/Git/git_bush/project/BASH_TRAINING
+$ cd ~
+
+# 3. Определить имя папки, в которой вы находитесь.
+Vlasov96@ASU-VSN MINGW64 ~
+$ pwd
+/c/Users/Vlasov96
+
+# 4. Создать внутри этой папки каталог с именем test1.
+Vlasov96@ASU-VSN MINGW64 ~
+$ mkdir test1
+
+# 5. Перейти в папку test1.
+Vlasov96@ASU-VSN MINGW64 ~
+$ cd test1
+
+# 6. Создать файл 1,2 и 3 внутри каталога test1.
+Vlasov96@ASU-VSN MINGW64 ~/test1
+$ touch file1 file2 file3
+
+# 7. Проверить содержимое каталога test1.
+Vlasov96@ASU-VSN MINGW64 ~/test1
+$ ls
+file1  file2  file3
+
+# 8. Перейти в домашнюю директорию.
+Vlasov96@ASU-VSN MINGW64 ~/test1
+$ cd ~
+
+# 9. Создать папку test2 внутри домашней директории.
+Vlasov96@ASU-VSN MINGW64 ~
+$ mkdir test2
+
+# 10. Удалить папку test2.
+Vlasov96@ASU-VSN MINGW64 ~
+$ rmdir test2
+
+# 11. Удалить файл 2 из папки test1.
+Vlasov96@ASU-VSN MINGW64 ~
+$ rm test1/file2
+
+# 12. Создать папку в домашней директории test3 и добавить в нее два файла.
+Vlasov96@ASU-VSN MINGW64 ~
+$ mkdir test3 && touch test3/fileA test3/fileB
+
+# 13. Удалить папку test3.
+Vlasov96@ASU-VSN MINGW64 ~
+$ rm -r test3
+
+# 14. Создать папку test4 в домашней директории.
+Vlasov96@ASU-VSN MINGW64 ~
+$ mkdir test4
+
+# 15. Переместить файлы 1 и 3 из папки test1 в папку test4.
+Vlasov96@ASU-VSN MINGW64 ~
+$ mv test1/file1 test1/file3 test4/
+
+# 16. Добавить в файл 1 три строки со словами line.
+Vlasov96@ASU-VSN MINGW64 ~
+$ printf "line\nline\nline\n" >> test4/file1
+
+# 17. Посмотреть содержимое файла 1.
+Vlasov96@ASU-VSN MINGW64 ~
+$ cat test4/file1
+line
+line
+line
+
+# 18. Добавьте в файл 3 три строки со словами line.
+Vlasov96@ASU-VSN MINGW64 ~
+$ printf "line\nline\nline\n" >> test4/file3
+
+# 19. Просмотрите содержимое двух файлов (1 и 3) сразу.
+Vlasov96@ASU-VSN MINGW64 ~
+$ cat test4/file1 test4/file3
+line
+line
+line
+line
+line
+line
+
+# 20. Используя один из редакторов замените все строки в файле 1.
+Vlasov96@ASU-VSN MINGW64 ~
+vim test4/file1"
+Внутри vim нажать i (добавить 1 в конце каждой строки) 
+Esc :wq"
+
+
+Vlasov96@ASU-VSN MINGW64 ~
+$ cat test4/file1
+line1
+line1
+line1

@@ -1,127 +1,167 @@
 // Бургер-меню для мобильной версии
 (function() {
-    
-    // Функция инициализации меню
     function initBurgerMenu() {
-        console.log('Инициализация бургер-меню...');
-        
-        // Получаем элементы
         const burgerBtn = document.getElementById('burgerBtn');
         const mobileNav = document.getElementById('mobileNav');
         const menuOverlay = document.getElementById('menuOverlay');
         
-        // Проверяем наличие элементов
-        if (!burgerBtn) {
-            console.error('❌ Кнопка меню #burgerBtn не найдена!');
-            return false;
-        }
-        if (!mobileNav) {
-            console.error('❌ Мобильное меню #mobileNav не найдено!');
-            return false;
-        }
-        if (!menuOverlay) {
-            console.error('❌ Оверлей #menuOverlay не найден!');
-            return false;
-        }
+        if (!burgerBtn || !mobileNav || !menuOverlay) return;
         
-        console.log('✅ Все элементы найдены:', {
-            burgerBtn: burgerBtn,
-            mobileNav: mobileNav,
-            menuOverlay: menuOverlay
-        });
-        
-        // Получаем все ссылки в мобильном меню
-        const mobileLinks = mobileNav.querySelectorAll('.nav-btn');
-        console.log('Найдено ссылок в меню:', mobileLinks.length);
-        
-        // Функция открытия/закрытия меню
         function toggleMenu() {
-            console.log('toggleMenu вызван');
             burgerBtn.classList.toggle('active');
             mobileNav.classList.toggle('active');
             menuOverlay.classList.toggle('active');
-            
-            if (mobileNav.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-                burgerBtn.innerHTML = '✕ Закрыть';
-                console.log('Меню открыто');
-            } else {
-                document.body.style.overflow = '';
-                burgerBtn.innerHTML = '☰ Меню';
-                console.log('Меню закрыто');
-            }
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
         }
         
-        // Функция закрытия меню
         function closeMenu() {
             if (mobileNav.classList.contains('active')) {
                 burgerBtn.classList.remove('active');
                 mobileNav.classList.remove('active');
                 menuOverlay.classList.remove('active');
                 document.body.style.overflow = '';
-                burgerBtn.innerHTML = '☰ Меню';
-                console.log('Меню закрыто через closeMenu');
             }
         }
         
-        // Удаляем старые обработчики, если есть
-        const newBurgerBtn = burgerBtn.cloneNode(true);
-        burgerBtn.parentNode.replaceChild(newBurgerBtn, burgerBtn);
+        burgerBtn.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', closeMenu);
         
-        // Назначаем новый обработчик
-        newBurgerBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Клик по кнопке меню!');
-            toggleMenu();
-        });
-        
-        // Обработчик на оверлей
-        menuOverlay.addEventListener('click', function(e) {
-            console.log('Клик по оверлею');
-            closeMenu();
-        });
-        
-        // Обработчики на ссылки
-        mobileLinks.forEach((link, index) => {
-            // Удаляем старые обработчики
-            const newLink = link.cloneNode(true);
-            link.parentNode.replaceChild(newLink, link);
-            
-            newLink.addEventListener('click', function(e) {
-                console.log('Клик по ссылке меню:', this.getAttribute('href'));
+        document.querySelectorAll('.mobile-nav .nav-btn').forEach(link => {
+            link.addEventListener('click', function(e) {
                 closeMenu();
-                
                 const targetId = this.getAttribute('href');
-                if (targetId && targetId.startsWith('#')) {
+                if (targetId?.startsWith('#')) {
                     e.preventDefault();
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({ 
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
+                    document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
+    }
+    
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initBurgerMenu) : initBurgerMenu();
+})();
+
+// ===== АКТИВАЦИЯ КНОПОК НАВИГАЦИИ ПРИ СКРОЛЛЕ =====
+(function() {
+    function initNavHighlight() {
+        const sections = document.querySelectorAll('section');
+        const navBtns = document.querySelectorAll('.nav-buttons .nav-btn');
+        if (!sections.length || !navBtns.length) return;
         
-        return true;
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    navBtns.forEach(btn => {
+                        btn.classList.toggle('active', btn.getAttribute('href') === `#${id}`);
+                    });
+                }
+            });
+        }, { threshold: 0.4 });
+        
+        sections.forEach(section => observer.observe(section));
     }
     
-    // Запускаем после полной загрузки страницы
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initBurgerMenu);
-    } else {
-        // DOM уже загружен
-        initBurgerMenu();
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initNavHighlight) : initNavHighlight();
+})();
+
+// ===== ПЛАВНАЯ ПРОКРУТКА ДЛЯ ДЕСКТОПНЫХ КНОПОК =====
+(function() {
+    function initSmoothScroll() {
+        document.querySelectorAll('.nav-buttons .nav-btn').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId?.startsWith('#')) {
+                    e.preventDefault();
+                    document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
     }
     
-    // Также запускаем через небольшую задержку (на всякий случай)
-    setTimeout(function() {
-        if (!document.getElementById('burgerBtn').__initDone) {
-            initBurgerMenu();
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initSmoothScroll) : initSmoothScroll();
+})();
+
+// ===== АККОРДЕОН ДЛЯ ЭТАПОВ =====
+(function() {
+    function initAccordions() {
+        const stageGroups = document.querySelectorAll('.stage-group');
+        
+        stageGroups.forEach(group => {
+            // По умолчанию все аккордеоны закрыты
+            group.classList.remove('open');
+            
+            const header = group.querySelector('.stage-header');
+            if (header) {
+                header.addEventListener('click', function() {
+                    // Переключаем класс open
+                    group.classList.toggle('open');
+                });
+            }
+        });
+    }
+    
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initAccordions) : initAccordions();
+})();
+
+// ===== СЛАЙДЕРЫ =====
+(function() {
+    function initSlider(sliderId, prevBtnId, nextBtnId, dotsId) {
+        const track = document.getElementById(sliderId);
+        const slides = track?.querySelectorAll('.slider-slide');
+        const prevBtn = document.getElementById(prevBtnId);
+        const nextBtn = document.getElementById(nextBtnId);
+        const dotsContainer = document.getElementById(dotsId);
+        
+        if (!track || !slides?.length) return;
+        
+        let currentIndex = 0;
+        const totalSlides = slides.length;
+        
+        function updateSlider() {
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            if (dotsContainer) {
+                dotsContainer.querySelectorAll('.dot').forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
         }
-    }, 100);
+        
+        function createDots() {
+            if (!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (i === currentIndex) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    currentIndex = i;
+                    updateSlider();
+                });
+                dotsContainer.appendChild(dot);
+            }
+        }
+        
+        prevBtn?.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        });
+        
+        nextBtn?.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateSlider();
+        });
+        
+        createDots();
+    }
     
+    document.readyState === 'loading' 
+        ? document.addEventListener('DOMContentLoaded', () => {
+            initSlider('sparkSlider', 'prevSparkBtn', 'nextSparkBtn', 'sparkDots');
+            initSlider('sqlSlider', 'prevSqlBtn', 'nextSqlBtn', 'sqlDots');
+        })
+        : (() => {
+            initSlider('sparkSlider', 'prevSparkBtn', 'nextSparkBtn', 'sparkDots');
+            initSlider('sqlSlider', 'prevSqlBtn', 'nextSqlBtn', 'sqlDots');
+        })();
 })();

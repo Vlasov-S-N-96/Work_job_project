@@ -1,0 +1,477 @@
+.body_style {
+    background: #f0f2f5;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    padding: 40px 20px;
+    margin: 0;
+}
+
+.conteiner-size {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: white;
+    padding: 25px 40px;
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    gap: 60px;
+}
+
+.photo-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1e4663;
+}
+
+.title-block {
+    flex-shrink: 0;
+}
+
+.title-block h1 {
+    font-size: 36px;
+    color: #1e4663;
+    margin: 0;
+    font-weight: 600;
+    border-left: 4px solid #1e4663;
+    padding-left: 20px;
+}
+
+.divider {
+    max-width: 1180px;
+    margin: 0 auto;
+    height: 6px;
+    background: linear-gradient(#1f6392, #16d6ad);
+}
+
+/* ===== НАВИГАЦИОННЫЕ КНОПКИ (ДЕСКТОП - 4 В РЯДУ) ===== */
+.nav-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    background: white;
+    padding: 20px;
+    margin-bottom: 0;
+    border-radius: 0;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: white;
+    color: #1e4663;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    padding: 0 15px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    border: 2px solid #1e4663;
+    cursor: pointer;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.nav-btn:hover {
+    background: #1e4663;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(30, 70, 99, 0.3);
+    border-color: #1e4663;
+}
+
+.nav-btn:active {
+    transform: translateY(0);
+    background: #0f3348;
+    color: white;
+    border-color: #0f3348;
+}
+
+.nav-btn.active {
+    background: #1e4663;
+    color: white;
+    border-color: #1e4663;
+}
+
+.content_section {
+    background: white;
+    border-radius: 0;
+    padding: 15px 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.subheadings_info {
+    font-weight: bold;
+    font-size: 22px;
+    margin-top: 25px;
+    margin-bottom: 8px;
+    color: #1e4663;
+}
+
+.subheadings_info:first-of-type {
+    margin-top: 0;
+}
+
+.ul_jackdaw {
+    list-style-type: disc;
+    margin-left: 0px;
+}
+
+.text_link a, a {
+    text-decoration: none;
+    color: #1f6392;
+}
+
+.text_link a:hover, a:hover {
+    color: #09a0ab;
+}
+
+p {
+    margin: 12px 0;
+    line-height: 1.5;
+}
+
+.footer {
+    background: #107980;
+    padding: 5px 45px 25px 45px;
+    border-radius: 0 0 24px 24px;
+    text-align: left;
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.footer-title {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.footer-social {
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.social__icon svg {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    padding: 4px;
+}
+
+.social__icon.telegram svg path,
+.social__icon.telegram svg circle,
+.social__icon.telegram svg rect,
+.social__icon.telegram svg polygon {
+    fill: #09a0ab;
+}
+
+.social__icon.email svg circle {
+    fill: #09a0ab;
+}
+
+.social__icon.email svg rect {
+    fill: white;
+}
+
+.social__icon.email svg path,
+.social__icon.email svg line {
+    stroke: red;
+}
+
+.social__icon.telegram:hover svg path,
+.social__icon.telegram:hover svg circle,
+.social__icon.telegram:hover svg rect,
+.social__icon.telegram:hover svg polygon {
+    fill: #006699;
+}
+
+.social__icon.email:hover svg rect {
+    fill: white;
+}
+
+.social__icon.email:hover svg path,
+.social__icon.email:hover svg line {
+    stroke: red;
+}
+
+.social__icon.email:hover svg circle {
+    fill: #006699;
+}
+
+.footer-copyright {
+    color: white;
+    font-size: 12px;
+    margin-top: 5px;
+    padding-top: 10px;
+    border-top: 2px solid #aaacad;
+}
+
+/* ===== БУРГЕР-МЕНЮ (стили для мобильных) ===== */
+.burger-menu {
+    display: none;
+    position: relative;
+}
+
+.burger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;              /* расстояние между иконкой и текстом */
+    width: auto;            /* автоматическая ширина */
+    height: 50px;           /* фиксированная высота */
+    padding: 0 25px;        /* отступы только по бокам */
+    background: #1e4663;
+    color: white;
+    border: none;
+    font-size: 18px;        /* размер текста */
+    font-weight: 500;
+    border-radius: 12px;    /* скругление как у капсулы */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    min-width: 50px;       /* минимальная ширина */
+    white-space: nowrap;    /* текст не переносится */
+}
+
+.burger-btn:hover {
+    background: #0f3348;
+    transform: translateY(-2px);
+}
+
+.burger-btn:active {
+    transform: translateY(0);
+}
+
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    max-width: 320px;
+    height: 100vh;
+    background: white;
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: left 0.3s ease;
+    padding: 80px 20px 30px;
+    overflow-y: auto;
+}
+
+.mobile-nav.active {
+    left: 0;
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+.menu-overlay.active {
+    display: block;
+}
+
+.mobile-nav .nav-btn {
+    display: flex;
+    margin-bottom: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+/* ===== АДАПТАЦИЯ ДЛЯ 768px ===== */
+@media screen and (max-width: 768px) {
+    
+    body.body_style {
+        padding: 20px 12px;
+    }
+
+    .nav-buttons {
+        display: none;
+    }
+    
+    .burger-menu {
+        display: block;
+    }
+    
+    .burger-btn {
+        display: flex;
+    }
+    
+    .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 20px;
+        gap: 15px;
+    }
+    
+    /* Фото + имя под ним (вертикально) */
+    .photo-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+    
+    .avatar {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .name {
+        display: block;
+        font-size: 12px;
+        font-weight: bold;
+        color: #1e4663;
+        margin: 0;
+        text-align: center;
+    }
+    
+    /* Заголовок - растягивается, справа от фото */
+    .title-block {
+        flex: 1;
+    }
+    
+    .title-block h1 {
+        font-size: 30px;
+        border-left: 4px solid #1e4663;
+        padding-left: 20px;
+        margin: 0;
+        font-weight: 700;          /* добавили жирность */
+    }
+    
+    /* Бургер справа */
+    .burger-menu {
+        flex-shrink: 0;
+    }
+    
+    .burger-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+        min-width: auto;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .mobile-nav .nav-btn {
+        height: 48px;
+        font-size: 14px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+    }
+
+    .divider {
+        max-width: 100%;
+        height: 4px;
+    }
+
+    .content_section {
+        padding: 15px 15px;
+    }
+
+    .subheadings_info {
+        font-size: 18px;
+        margin-top: 20px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    .ul_jackdaw li {
+        font-size: 14px;
+    }
+
+    .footer {
+        padding: 15px 20px 25px 20px;
+        text-align: center;
+    }
+
+    .footer-title {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .footer-social {
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .social__icon svg {
+        width: 32px;
+        height: 32px;
+        padding: 5px;
+    }
+    
+    .footer-copyright {
+        font-size: 10px;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .photo-block {
+        gap: 5px;
+    }
+    
+    .avatar {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .name {
+        font-size: 10px;
+    }
+    
+    .title-block h1 {
+        font-size: 14px;
+        padding-left: 10px;
+        border-left-width: 2px;
+    }
+    
+    .burger-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+        height: 32px;
+    }
+}
