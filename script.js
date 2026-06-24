@@ -30,9 +30,10 @@
             link.addEventListener('click', function(e) {
                 closeMenu();
                 const targetId = this.getAttribute('href');
-                if (targetId?.startsWith('#')) {
+                if (targetId && targetId.startsWith('#')) {
                     e.preventDefault();
-                    document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    const target = document.querySelector(targetId);
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
@@ -71,9 +72,10 @@
         document.querySelectorAll('.nav-buttons .nav-btn').forEach(link => {
             link.addEventListener('click', function(e) {
                 const targetId = this.getAttribute('href');
-                if (targetId?.startsWith('#')) {
+                if (targetId && targetId.startsWith('#')) {
                     e.preventDefault();
-                    document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    const target = document.querySelector(targetId);
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
@@ -86,18 +88,17 @@
 (function() {
     function initAccordions() {
         const stageGroups = document.querySelectorAll('.stage-group');
-        
         stageGroups.forEach(group => {
-            // По умолчанию все аккордеоны закрыты
             group.classList.remove('open');
-            
             const header = group.querySelector('.stage-header');
-            if (header) {
-                header.addEventListener('click', function() {
-                    // Переключаем класс open
-                    group.classList.toggle('open');
-                });
+            const btn = group.querySelector('.toggle-btn');
+            
+            function toggle(e) {
+                group.classList.toggle('open');
             }
+            
+            if (header) header.addEventListener('click', toggle);
+            if (btn) btn.addEventListener('click', (e) => e.stopPropagation());
         });
     }
     
@@ -113,10 +114,10 @@
         const nextBtn = document.getElementById(nextBtnId);
         const dotsContainer = document.getElementById(dotsId);
         
-        if (!track || !slides?.length) return;
+        if (!track || !slides || slides.length === 0) return;
         
         let currentIndex = 0;
-        const totalSlides = slides.length;
+        const total = slides.length;
         
         function updateSlider() {
             track.style.transform = `translateX(-${currentIndex * 100}%)`;
@@ -130,7 +131,7 @@
         function createDots() {
             if (!dotsContainer) return;
             dotsContainer.innerHTML = '';
-            for (let i = 0; i < totalSlides; i++) {
+            for (let i = 0; i < total; i++) {
                 const dot = document.createElement('div');
                 dot.classList.add('dot');
                 if (i === currentIndex) dot.classList.add('active');
@@ -142,26 +143,23 @@
             }
         }
         
-        prevBtn?.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        if (prevBtn) prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + total) % total;
             updateSlider();
         });
-        
-        nextBtn?.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % totalSlides;
+        if (nextBtn) nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % total;
             updateSlider();
         });
         
         createDots();
+        setTimeout(updateSlider, 50);
     }
     
-    document.readyState === 'loading' 
-        ? document.addEventListener('DOMContentLoaded', () => {
-            initSlider('sparkSlider', 'prevSparkBtn', 'nextSparkBtn', 'sparkDots');
-            initSlider('sqlSlider', 'prevSqlBtn', 'nextSqlBtn', 'sqlDots');
-        })
-        : (() => {
-            initSlider('sparkSlider', 'prevSparkBtn', 'nextSparkBtn', 'sparkDots');
-            initSlider('sqlSlider', 'prevSqlBtn', 'nextSqlBtn', 'sqlDots');
-        })();
+    function initAllSliders() {
+        initSlider('sparkSlider', 'prevSparkBtn', 'nextSparkBtn', 'sparkDots');
+        initSlider('sqlSlider', 'prevSqlBtn', 'nextSqlBtn', 'sqlDots');
+    }
+    
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initAllSliders) : initAllSliders();
 })();
